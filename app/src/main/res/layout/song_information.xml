@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
+    <RelativeLayout
+        android:background="@drawable/background_card"
+        android:layout_width="match_parent"
+        android:layout_height="110dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_song"
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/avatar" />
+
+        <TextView
+            android:id="@+id/name_song"
+            android:layout_width="262dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@+id/image_song"
+            android:layout_toRightOf="@+id/image_song"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/nameSong"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/name_author"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_song"
+            android:layout_alignStart="@+id/name_song"
+            android:layout_alignLeft="@+id/name_song"
+            android:layout_marginTop="20dp"
+            android:singleLine="true"
+            android:text="@string/nameAuthor"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/time"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_song"
+            android:layout_marginStart="45dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/name_author"
+            android:layout_toRightOf="@+id/name_author"
+            android:text="1:40:00"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-38dp"
+            android:layout_marginLeft="-38dp"
+            android:layout_marginTop="51dp"
+            android:layout_toEndOf="@+id/name_song"
+            android:layout_toRightOf="@+id/name_song"
+            android:src="@drawable/ic_baseline_star_32" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

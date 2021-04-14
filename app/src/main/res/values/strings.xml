@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MusicApp</string>
+    <string name="nameSong">Unknown</string>
+    <string name="nameAuthor">Unknown</string>
+    <string name="search_bar">Search</string>
+    <string name="duration">00:00</string>
+</resources>

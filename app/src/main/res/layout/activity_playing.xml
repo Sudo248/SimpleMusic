@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".PlayingActivity">
+    <RelativeLayout
+        android:id="@+id/title"
+        android:background="@drawable/background_title"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <Button
+            android:id="@+id/comeBackButton"
+            android:layout_width="42dp"
+            android:layout_height="37dp"
+            android:background="@drawable/ic_baseline_chevron_left" />
+
+        <TextView
+            android:id="@+id/name_song_playing"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="3dp"
+            android:layout_marginLeft="3dp"
+            android:layout_toEndOf="@+id/comeBackButton"
+            android:layout_toRightOf="@+id/comeBackButton"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:text="@string/nameSong"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/name_author_playing"
+            android:layout_width="80dp"
+            android:singleLine="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_song_playing"
+            android:layout_alignStart="@+id/name_song_playing"
+            android:layout_alignLeft="@+id/name_song_playing"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="6dp"
+            android:text="@string/nameAuthor" />
+    </RelativeLayout>
+
+    <com.gauravk.audiovisualizer.visualizer.CircleLineVisualizer
+        android:id="@+id/circleVisualizer"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="150dp"
+        app:avColor="#FF0202"
+        app:avDensity="0.5"
+        app:avSpeed="normal"
+        app:avType="outline"
+        app:avWidth="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.106" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_playing_song"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginRight="120dp"
+        app:civ_border_color="#E40909"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/circleVisualizer"
+        app:layout_constraintEnd_toEndOf="@+id/circleVisualizer"
+        app:layout_constraintStart_toStartOf="@+id/circleVisualizer"
+        app:layout_constraintTop_toTopOf="@+id/circleVisualizer" />
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="389dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleVisualizer">
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
+            android:singleLine="true"
+            android:text="@string/duration"
+            android:textColor="#FFF"
+            android:textSize="18sp" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="358dp"
+            android:layout_height="wrap_content"
+            android:progressDrawable="@drawable/seekbar_background"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/totalDuration"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:singleLine="true"
+            android:text="@string/duration"
+            android:textColor="#FFF"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_playing_song">
+
+        <ImageButton
+            android:id="@+id/shuffle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_baseline_shuffle_on" />
+
+        <ImageButton
+            android:id="@+id/previous"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_baseline_skip_previous"
+            android:layout_marginEnd="10dp" />
+
+        <ImageButton
+            android:id="@+id/playing_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_baseline_pause" />
+
+        <ImageButton
+            android:id="@+id/next"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_baseline_skip_next"
+            android:layout_marginStart="10dp" />
+
+        <ImageButton
+            android:id="@+id/repeat"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_baseline_repeat_on"
+            android:layout_marginStart="10dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
