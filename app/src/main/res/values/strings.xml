@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MusicApp</string>
+    <string name="app_name">Simple Music</string>
     <string name="nameSong">Unknown</string>
     <string name="nameAuthor">Unknown</string>
     <string name="search_bar">Search</string>

@@ -14,7 +14,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.duonglh.musicapp.model.MyMediaPlay;
+import com.duonglh.musicapp.model.MyMediaPlayer;
 import com.duonglh.musicapp.model.Song.Song;
 import com.gauravk.audiovisualizer.visualizer.CircleLineVisualizer;
 
@@ -31,12 +31,8 @@ public class PlayingActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private Thread updateSeekBar;
     private CircleLineVisualizer circleVisualizer;
-
-
-    private List<Song> listSongs;
     private int position = 0;
     private boolean startNewSong;
-    private final MyMediaPlay myMediaPlay = new MyMediaPlay();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +43,13 @@ public class PlayingActivity extends AppCompatActivity {
         loadData();
         setClickListener();
     }
+
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onBackPressed() {
+        super.onBackPressed();
         if (circleVisualizer != null)
             circleVisualizer.release();
+        PlayingActivity.this.finish();
     }
 
     private void mapping(){
@@ -67,18 +65,18 @@ public class PlayingActivity extends AppCompatActivity {
         nameAuthorView       = findViewById(R.id.name_author_playing);
         playingImageView     = findViewById(R.id.image_playing_song);
         seekBar              = findViewById(R.id.seekBar);
-        circleVisualizer = findViewById(R.id.circleVisualizer);
+        circleVisualizer     = findViewById(R.id.circleVisualizer);
+
     }
 
     private void loadData(){
+
         Intent intent       = this.getIntent();
         Bundle bundle       = intent.getExtras();
-        listSongs           = MyMediaPlay.listSong;
         position            = bundle.getInt("position",0);
         startNewSong        = bundle.getBoolean("startNewSong");
-        MyMediaPlay.context = PlayingActivity.this;
-        myMediaPlay.setCompletionSong();
-        myMediaPlay.setUpdateView(new MyMediaPlay.UpdateView() {
+        MyMediaPlayer.getInstance().setContext(this);
+        MyMediaPlayer.getInstance().setViewSong(new MyMediaPlayer.ViewSong() {
             @Override
             public void update() {
                 setView();
@@ -89,11 +87,11 @@ public class PlayingActivity extends AppCompatActivity {
     private void setClickListener(){
 
         if(startNewSong){
-            myMediaPlay.play(position);
+            MyMediaPlayer.getInstance().play(position);
             animationRotation();
         }
         else{
-            if(myMediaPlay.isPlaying()){
+            if(MyMediaPlayer.MUSIC.isPlaying()){
                 playButton.setBackgroundResource(R.drawable.ic_baseline_pause);
                 animationRotation();
             }
@@ -103,18 +101,17 @@ public class PlayingActivity extends AppCompatActivity {
             }
         }
 
-
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(MyMediaPlay.mediaPlayer.isPlaying()){
+                if(MyMediaPlayer.MUSIC.isPlaying()){
                     playingImageView.animate().cancel();
-                    myMediaPlay.pause();
+                    MyMediaPlayer.MUSIC.pause();
                     playButton.setBackgroundResource(R.drawable.ic_baseline_play);
                 }
                 else{
                     animationRotation();
-                    myMediaPlay.play();
+                    MyMediaPlayer.MUSIC.start();
                     playButton.setBackgroundResource(R.drawable.ic_baseline_pause);
                 }
             }
@@ -134,7 +131,7 @@ public class PlayingActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlay.nextSong();
+                MyMediaPlayer.getInstance().nextSong();
                 setView();
             }
         });
@@ -142,7 +139,7 @@ public class PlayingActivity extends AppCompatActivity {
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlay.previousSong();
+                MyMediaPlayer.getInstance().previousSong();
                 setView();
             }
         });
@@ -150,12 +147,12 @@ public class PlayingActivity extends AppCompatActivity {
         repeatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myMediaPlay.isLooping()){
-                    myMediaPlay.setLooping(false);
+                if(MyMediaPlayer.MUSIC.isLooping()){
+                    MyMediaPlayer.MUSIC.setLooping(false);
                     repeatButton.setBackgroundResource(R.drawable.ic_baseline_repeat_on);
                 }
                 else{
-                    myMediaPlay.setLooping(true);
+                    MyMediaPlayer.MUSIC.setLooping(true);
                     repeatButton.setBackgroundResource(R.drawable.ic_baseline_repeat);
                 }
             }
@@ -164,15 +161,15 @@ public class PlayingActivity extends AppCompatActivity {
         shuffleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myMediaPlay.isShuffle()){
-                    myMediaPlay.setShuffle(false);
+                if(MyMediaPlayer.getInstance().isShuffle()){
+                    MyMediaPlayer.getInstance().setShuffle(false);
                     shuffleButton.setBackgroundResource(R.drawable.ic_baseline_shuffle_on);
                 }
                 else{
-                    myMediaPlay.setShuffle(true);
+                    MyMediaPlayer.getInstance().setShuffle(true);
                     shuffleButton.setBackgroundResource(R.drawable.ic_baseline_shuffle);
                 }
-                if(myMediaPlay.isLooping()){
+                if(MyMediaPlayer.MUSIC.isLooping()){
                     repeatButton.performClick();
                 }
             }
@@ -181,13 +178,13 @@ public class PlayingActivity extends AppCompatActivity {
         updateSeekBar = new Thread(){
             @Override
             public void run() {
-                int totalDuration = myMediaPlay.getTotalDuration();
+                int totalDuration = MyMediaPlayer.MUSIC.getDuration();
                 seekBar.setMax(totalDuration);
                 int currentDuration = 0;
                 while (currentDuration <= totalDuration){
                     try{
                         sleep(500);
-                        currentDuration = MyMediaPlay.mediaPlayer.getCurrentPosition();
+                        currentDuration = MyMediaPlayer.MUSIC.getCurrentPosition();
                         seekBar.setProgress(currentDuration);
 
                     }catch (Exception e){
@@ -214,7 +211,7 @@ public class PlayingActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                myMediaPlay.seekTo(seekBar.getProgress());
+                MyMediaPlayer.MUSIC.seekTo(seekBar.getProgress());
                 durationView.setText(timeToString(seekBar.getProgress()));
             }
         });
@@ -225,7 +222,7 @@ public class PlayingActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                durationView.setText(timeToString(myMediaPlay.getCurrentDuration()));
+                durationView.setText(timeToString(MyMediaPlayer.MUSIC.getCurrentPosition()));
                 handler.postDelayed(this, delay);
             }
         }, delay);
@@ -233,11 +230,11 @@ public class PlayingActivity extends AppCompatActivity {
     }
 
     private void setView(){
-        Song songPlaying = listSongs.get(MyMediaPlay.currentSong);
+        Song songPlaying = MyMediaPlayer.getInstance().getCurrentSong();
         nameSongView.setText(songPlaying.getNameSong());
         nameAuthorView.setText(songPlaying.getNameAuthor());
         if(songPlaying.getImage() != null) {
-            Glide.with(PlayingActivity.this).asBitmap()
+            Glide.with(getApplicationContext()).asBitmap()
                     .load(songPlaying.getImage())
                     .into(playingImageView);
         }
@@ -245,8 +242,9 @@ public class PlayingActivity extends AppCompatActivity {
             playingImageView.setImageResource(R.drawable.avatar);
         }
         totalDurationView.setText(songPlaying.getDuration());
-        int id = MyMediaPlay.mediaPlayer.getAudioSessionId();
+        int id = MyMediaPlayer.MUSIC.getAudioSessionId();
         if(id != -1){
+            circleVisualizer.setEnabled(false);
             circleVisualizer.setAudioSessionId(id);
         }
     }

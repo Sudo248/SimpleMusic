@@ -1,7 +1,7 @@
 package com.duonglh.musicapp.model.Song;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +11,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.duonglh.musicapp.PlayingActivity;
 import com.duonglh.musicapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> implements Filterable {
 
-    List<Song> listSong = null;
-    List<Song> listSongsOld = null;
-    Context context;
+    private List<Song> listSong = null;
+    private List<Song> listSongsOld = null;
+    private Context context;
+    private boolean isSearching = false;
     public void setData(Context context, List<Song> listSongs) {
         this.context = context;
         this.listSong = listSongs;
@@ -38,8 +40,8 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     public interface IsOnClickItem{
         void onClickItem(int position);
     }
-    private IsClickFavorite isClickFavorite;
-    private IsOnClickItem isOnClickItem;
+    private final IsClickFavorite isClickFavorite;
+    private final IsOnClickItem isOnClickItem;
 
     public SongAdapter(IsClickFavorite isClickFavorite, IsOnClickItem isOnClickItem) {
         this.isClickFavorite = isClickFavorite;
@@ -86,14 +88,24 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
                     song.setFavorite(true);
                     holder.imageViewStart.setImageResource(R.drawable.ic_baseline_star_32);
                 }
-                isClickFavorite.updateFavorite(song);
+                isClickFavorite.updateFavorite(song);// update vao database
             }
         });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onClick(View v) {
-                isOnClickItem.onClickItem(position);
+                if(isSearching){
+                    int id = listSong.get(position).getId();
+                    for(int i=0; i < listSongsOld.size(); i++){
+                        if(listSongsOld.get(i).getId() == id){
+                            isOnClickItem.onClickItem(i);
+                            break;
+                        }
+                    }
+                }
+                else isOnClickItem.onClickItem(position);
             }
         });
 
@@ -107,7 +119,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         return 0;
     }
 
-    public class SongViewHolder extends RecyclerView.ViewHolder{
+    public static class SongViewHolder extends RecyclerView.ViewHolder{
 
         private final ImageView imageViewSong, imageViewStart;
         private final TextView textViewNameSong, textViewNameAuthor, textViewTime;
@@ -130,10 +142,12 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             protected FilterResults performFiltering(CharSequence constraint) {
                 String keySearch = constraint.toString();
                 if(keySearch.isEmpty()){
+                    isSearching = false;
                     listSong = listSongsOld;
                 }
                 else{
                     List<Song> list = new ArrayList<>();
+                    isSearching = true;
                     for(Song song:listSongsOld){
                         if(song.getNameSong().toLowerCase().contains(keySearch.toLowerCase()) ||
                            song.getNameAuthor().toLowerCase().contains(keySearch.toLowerCase())){

@@ -1,18 +1,12 @@
 package com.duonglh.musicapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,103 +17,91 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.duonglh.musicapp.model.Data.Mp3File;
-import com.duonglh.musicapp.model.MyMediaPlay;
+import com.duonglh.musicapp.model.MyMediaPlayer;
 import com.duonglh.musicapp.model.Song.Song;
 import com.duonglh.musicapp.model.Song.SongAdapter;
 import com.duonglh.musicapp.model.Song.SongDataBase;
 
-import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int REQUEST_FROM_PLAYING_ACTIVITY = 1;
+    public static final int REQUEST_PERMISSION = 2;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private CircleImageView imageViewSongPlaying;
     private TextView textViewNameSongPlaying, textViewAuthorPlaying;
     private ImageButton previousButton, nextButton, playingButton;
     private SongAdapter songAdapter;
-    private ArrayList<Song> listSong = new ArrayList<>();
     private SearchView searchView;
     private ConstraintLayout mainPlaying;
-    private Thread updateProcessBar;
-    private final MyMediaPlay myMediaPlay = new MyMediaPlay();
-    public static final int REQUEST_FROM_PLAYING_ACTIVITY = 1;
-    public static final int REQUEST_PERMISSION = 2;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mapping();
+        setContentView(R.layout.load_data);
+        getSupportActionBar().hide();
         checkPermissions();
+
     }
 
-    private void mapping(){
-        recyclerView            = findViewById(R.id.listViewSongs);
-        progressBar             = findViewById(R.id.progress_music);
-        imageViewSongPlaying    = findViewById(R.id.main_playing_music_icon);
+    private void mapping() {
+        recyclerView = findViewById(R.id.listViewSongs);
+        progressBar = findViewById(R.id.progress_music);
+        imageViewSongPlaying = findViewById(R.id.main_playing_music_icon);
         textViewNameSongPlaying = findViewById(R.id.main_playing_name_song);
-        textViewAuthorPlaying   = findViewById(R.id.main_name_author);
-        previousButton          = findViewById(R.id.main_previous_button);
-        nextButton              = findViewById(R.id.main_next_button);
-        playingButton           = findViewById(R.id.main_play_button);
-        mainPlaying             = findViewById(R.id.main_playing);
+        textViewAuthorPlaying = findViewById(R.id.main_name_author);
+        previousButton = findViewById(R.id.main_previous_button);
+        nextButton = findViewById(R.id.main_next_button);
+        playingButton = findViewById(R.id.main_play_button);
+        mainPlaying = findViewById(R.id.main_playing);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    private void checkPermissions(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED &&
-            checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED){
+    private void checkPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED &&
+                    checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) {
                 String[] permission = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO};
                 requestPermissions(permission, REQUEST_PERMISSION);
+            } else {
+                new LoadDataAsyncTask().execute();
             }
-            else{
-                loadData();
-            }
-        }
-        else{
-            loadData();
+        } else {
+            new LoadDataAsyncTask().execute();
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == REQUEST_PERMISSION){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[1] == PackageManager.PERMISSION_GRANTED){
-                loadData();
-            }
-            else{
-                Toast.makeText(this,"Permission Denied",Toast.LENGTH_LONG).show();
+        if (requestCode == REQUEST_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                new LoadDataAsyncTask().execute();
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
             }
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    private void loadData(){
-        Mp3File mp3file = new Mp3File();
-        listSong = mp3file.getAllData(MainActivity.this);
-        if(!listSong.isEmpty()){
-            createMediaPlay();
-            displayListSongs();
-            setClickListener();
-        }
-        else{
-            Toast.makeText(this, "NO  MUSIC",Toast.LENGTH_LONG).show();
-        }
-    }
 
-    private void createMediaPlay(){
-        MyMediaPlay.context = MainActivity.this;
-        myMediaPlay.setCompletionSong();
-        myMediaPlay.createSong( 0);
-        myMediaPlay.setUpdateView(new MyMediaPlay.UpdateView() {
+    private void createMediaPlay() {
+        MyMediaPlayer.getInstance().setContext(this);
+        MyMediaPlayer.getInstance().create(0);
+        MyMediaPlayer.getInstance().setViewSong(new MyMediaPlayer.ViewSong() {
             @Override
             public void update() {
                 setView();
@@ -127,8 +109,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void displayListSongs(){
-
+    private void displayListSongs() {
         songAdapter = new SongAdapter(new SongAdapter.IsClickFavorite() {
             @Override
             public void updateFavorite(Song song) {
@@ -138,26 +119,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClickItem(int position) {
                 Intent intent = new Intent(MainActivity.this, PlayingActivity.class);
-                intent.putExtra("position",position)
+                intent.putExtra("position", position)
                         .putExtra("startNewSong", true);
-                MainActivity.this.startActivityForResult(intent,REQUEST_FROM_PLAYING_ACTIVITY);
+                MainActivity.this.startActivityForResult(intent, REQUEST_FROM_PLAYING_ACTIVITY);
             }
         });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        songAdapter.setData(MainActivity.this, listSong);
+        songAdapter.setData(MainActivity.this, MyMediaPlayer.getInstance().getListSong());
         recyclerView.setAdapter(songAdapter);
         setView();
     }
 
-    private void setClickListener(){
+    private void setClickListener() {
 
-        if(myMediaPlay.isPlaying()){
+        if (MyMediaPlayer.MUSIC.isPlaying()) {
             animationRotation();
             playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
-        }
-        else{
+        } else {
             imageViewSongPlaying.animate().cancel();
             playingButton.setBackgroundResource(R.drawable.ic_baseline_play);
         }
@@ -166,14 +146,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(myMediaPlay.isPlaying()){
+                if (MyMediaPlayer.MUSIC.isPlaying()) {
                     imageViewSongPlaying.animate().cancel();
                     playingButton.setBackgroundResource(R.drawable.ic_baseline_play);
-                    myMediaPlay.pause();
-                }
-                else {
+                    MyMediaPlayer.MUSIC.pause();
+                } else {
                     animationRotation();
-                    myMediaPlay.play();
+                    MyMediaPlayer.MUSIC.start();
                     playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
                 }
             }
@@ -182,7 +161,9 @@ public class MainActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlay.nextSong();
+                MyMediaPlayer.getInstance().nextSong();
+                animationRotation();
+                playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
                 setView();
             }
         });
@@ -190,7 +171,9 @@ public class MainActivity extends AppCompatActivity {
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlay.previousSong();
+                MyMediaPlayer.getInstance().previousSong();
+                animationRotation();
+                playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
                 setView();
             }
         });
@@ -199,25 +182,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PlayingActivity.class);
-                intent.putExtra("position",-1)
+                intent.putExtra("position", -1)
                         .putExtra("startNewSong", false);
-
-                MainActivity.this.startActivityForResult(intent,REQUEST_FROM_PLAYING_ACTIVITY);
+                MainActivity.this.startActivityForResult(intent, REQUEST_FROM_PLAYING_ACTIVITY);
             }
         });
 
-        updateProcessBar = new Thread(){
+        Thread updateProcessBar = new Thread() {
             @Override
             public void run() {
-                int totalDuration = myMediaPlay.getTotalDuration();
+                int totalDuration = MyMediaPlayer.MUSIC.getDuration();
                 int currentDuration = 0;
-                while (currentDuration <= totalDuration){
-                    try{
-                        sleep(500);
-                        currentDuration = MyMediaPlay.mediaPlayer.getCurrentPosition();
+                while (currentDuration <= totalDuration) {
+                    try {
+                        sleep(1000);
+                        currentDuration = MyMediaPlayer.MUSIC.getCurrentPosition();
                         progressBar.setProgress(currentDuration);
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -229,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void animationRotation(){
+    private void animationRotation() {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -241,10 +223,10 @@ public class MainActivity extends AppCompatActivity {
                 .setInterpolator(new LinearInterpolator()).start();
     }
 
-    private void setView(){
-        Song playingSong = listSong.get(myMediaPlay.getCurrentSong());
+    private void setView() {
+        Song playingSong = MyMediaPlayer.getInstance().getCurrentSong();
         if (playingSong.getImage() != null) {
-            Glide.with(MainActivity.this).asBitmap()
+            Glide.with(getApplicationContext()).asBitmap()
                     .load(playingSong.getImage())
                     .into(imageViewSongPlaying);
         } else {
@@ -252,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         }
         textViewNameSongPlaying.setText(playingSong.getNameSong());
         textViewAuthorPlaying.setText(playingSong.getNameAuthor());
-        progressBar.setMax(myMediaPlay.getTotalDuration());
+        progressBar.setMax(MyMediaPlayer.MUSIC.getDuration());
     }
 
     @Override
@@ -262,7 +244,6 @@ public class MainActivity extends AppCompatActivity {
         searchView = (SearchView) menu.findItem(R.id.search_bar).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -282,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(!searchView.isIconified()){
+        if (!searchView.isIconified()) {
             searchView.setIconified(true);
             return;
         }
@@ -290,19 +271,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_FROM_PLAYING_ACTIVITY){
-            MyMediaPlay.context = MainActivity.this;
-            myMediaPlay.setCompletionSong();
+        if (requestCode == REQUEST_FROM_PLAYING_ACTIVITY) {
+            MyMediaPlayer.getInstance().setContext(this);
             setView();
-            if(myMediaPlay.isPlaying()){
+            if (MyMediaPlayer.MUSIC.isPlaying()) {
                 animationRotation();
                 playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
-            }
-            else{
+            } else {
                 imageViewSongPlaying.animate().cancel();
                 playingButton.setBackgroundResource(R.drawable.ic_baseline_play);
+            }
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class LoadDataAsyncTask extends AsyncTask<Void, Integer, String> {
+        @RequiresApi(api = Build.VERSION_CODES.R)
+        @Override
+        protected String doInBackground(Void... voids) {
+            Mp3File mp3file = new Mp3File();
+            mp3file.loadAllData(MainActivity.this);
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.R)
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            MainActivity.this.getSupportActionBar().show();
+            setContentView(R.layout.activity_main);
+            mapping();
+            if (!MyMediaPlayer.getInstance().getListSong().isEmpty()) {
+                createMediaPlay();
+                displayListSongs();
+                setClickListener();
+            } else {
+                Toast.makeText(MainActivity.this, "NO  MUSIC", Toast.LENGTH_LONG).show();
             }
         }
     }
