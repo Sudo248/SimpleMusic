@@ -28,6 +28,7 @@ public class Mp3File {
     @SuppressLint("StaticFieldLeak")
     private Context context;
     private ArrayList<Song> listSong;
+    private byte[] defaultImage;
 
     // get Data From Storage
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -41,7 +42,6 @@ public class Mp3File {
                 .collect(Collectors.toList());
         MyMediaPlayer.getInstance().setListSong(listSong);
         return listSong;
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -112,6 +112,10 @@ public class Mp3File {
         String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         retriever.release();
         return new Song(path, image, nameSong, nameAuthor, duration);
+    }
+
+    private void getDefaultImage(){
+
     }
 
 }

@@ -70,7 +70,6 @@ public class PlayingActivity extends AppCompatActivity {
     }
 
     private void loadData(){
-
         Intent intent       = this.getIntent();
         Bundle bundle       = intent.getExtras();
         position            = bundle.getInt("position",0);

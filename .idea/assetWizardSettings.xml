@@ -3,6 +3,11 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+        <entry key="imageWizard">
+          <value>
+            <PersistentState />
+          </value>
+        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -18,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:$USER_HOME$/Android/Sdk/icons/material/materialicons/shuffle_on/baseline_shuffle_on_24.xml" />
+                                      <entry key="url" value="file:$USER_HOME$/Android/Sdk/icons/material/materialicons/music_note/baseline_music_note_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +33,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ff6d74" />
-                            <entry key="outputName" value="ic_baseline_shuffle_on" />
+                            <entry key="outputName" value="ic_baseline_music_note" />
                           </map>
                         </option>
                       </PersistentState>

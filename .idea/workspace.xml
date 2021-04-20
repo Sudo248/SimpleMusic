@@ -14,6 +14,8 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Duong" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="BranchesTreeState">
@@ -32,16 +34,24 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2e0b4039-8413-4f3f-ae07-0ad4a10efdf7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__pl_droidsonroids_gif_android_gif_drawable_1_2_22_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/MyMediaPlayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/intro.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/logo_simple_music.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/load_data.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MusicService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/MyNotificationChannel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_arrow_left.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_cancel.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_pause_circle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_queue_music.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/notification_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/notification.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" afterDir="false" />
@@ -52,22 +62,16 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/MusicApp.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/MusicApp.app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/PlayingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/PlayingActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Data/Mp3File.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Data/Mp3File.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/MyMediaPlay.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/SongAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/SongAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/main_playing_song.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background_title.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_title.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_chevron_left.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_play_circle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_playing.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_playing.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/song_information.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/song_information.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,9 +103,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="valueResourceFile" />
-        <option value="resourceFile" />
-        <option value="layoutResourceFile" />
         <option value="Class" />
+        <option value="layoutResourceFile" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -122,6 +126,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="android-custom-view/home/duonglh/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.1.0/f2bdf79e1977939817f54a9d3e2f6bc52b63bdd0/recyclerview-1.1.0-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_SELECTED" value="RecyclerView" />
     <property name="android-custom-view/home/duonglh/.gradle/caches/modules-2/files-2.1/com.gauravk.audiovisualizer/audiovisualizer/0.9.2/1c529e3fc652256afc7a94acfa844cc8f79ca4e7/audiovisualizer-0.9.2-sources.jar!/com/gauravk/audiovisualizer/base/BaseVisualizer.java_SELECTED" value="BaseVisualizer" />
     <property name="android-custom-view/home/duonglh/Android/Sdk/sources/android-30/android/view/View.java_SELECTED" value="View" />
@@ -133,9 +138,13 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.duonglh.musicapp" />
+      <recent name="com.duonglh.musicapp.model" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
     </key>
@@ -241,6 +250,29 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State />
@@ -248,7 +280,15 @@
         </entry>
       </map>
     </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="1" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="WindowStateProjectService">
     <state x="397" y="226" width="1188" height="662" key="#PSD" timestamp="1617536820520">
@@ -259,18 +299,22 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="454" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1617296322925" />
-    <state x="757" y="165" width="468" height="784" key="#com.intellij.ide.util.MemberChooser" timestamp="1618649047725">
+    <state x="757" y="165" width="468" height="784" key="#com.intellij.ide.util.MemberChooser" timestamp="1618809784509">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="757" y="165" width="468" height="784" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1618649047725" />
+    <state x="757" y="165" width="468" height="784" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1618809784509" />
+    <state x="703" y="400" width="585" height="325" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1618896645880">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="703" y="400" width="585" height="325" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/72.27.1848.1053@72.27.1848.1053" timestamp="1618896645880" />
     <state x="72" y="27" width="1838" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1618504081496">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="72" y="27" width="1838" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1618504081496" />
-    <state x="663" y="242" width="655" height="629" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1618714696135">
+    <state x="663" y="242" width="655" height="629" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1618897133071">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="663" y="242" width="655" height="629" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1618714696135" />
+    <state x="663" y="242" width="655" height="629" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1618897133071" />
     <state x="172" y="127" width="1648" height="853" key="AVDManager" timestamp="1618714150999">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
@@ -279,67 +323,71 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="576" y="304" width="830" height="505" key="AndroidCreateResourceDirectoryDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1617636012379" />
-    <state x="576" y="304" width="830" height="505" key="AndroidCreateResourceFileDialog" timestamp="1618396084152">
+    <state x="576" y="304" width="830" height="505" key="AndroidCreateResourceFileDialog" timestamp="1618897931806">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="576" y="304" width="830" height="505" key="AndroidCreateResourceFileDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1618396084152" />
+    <state x="576" y="304" width="830" height="505" key="AndroidCreateResourceFileDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1618897931806" />
     <state x="781" y="301" width="456" height="512" key="AndroidCreateXmlResourceDialog" timestamp="1617822014812">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="781" y="301" width="456" height="512" key="AndroidCreateXmlResourceDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1617822014812" />
-    <state x="774" y="314" width="881" height="491" key="FileChooserDialogImpl" timestamp="1618715318205">
+    <state x="774" y="314" width="881" height="491" key="FileChooserDialogImpl" timestamp="1618929127293">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="774" y="314" width="881" height="491" key="FileChooserDialogImpl/72.27.1848.1053@72.27.1848.1053" timestamp="1618715318205" />
-    <state width="1791" height="370" key="GridCell.Tab.0.bottom" timestamp="1618714717523">
+    <state x="774" y="314" width="881" height="491" key="FileChooserDialogImpl/72.27.1848.1053@72.27.1848.1053" timestamp="1618929127293" />
+    <state width="1791" height="370" key="GridCell.Tab.0.bottom" timestamp="1618896593074">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="370" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1618714717523" />
-    <state width="1791" height="370" key="GridCell.Tab.0.center" timestamp="1618714717523">
+    <state width="1791" height="370" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1618896593074" />
+    <state width="1791" height="370" key="GridCell.Tab.0.center" timestamp="1618896593074">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="370" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1618714717523" />
-    <state width="1791" height="370" key="GridCell.Tab.0.left" timestamp="1618714717522">
+    <state width="1791" height="370" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1618896593074" />
+    <state width="1791" height="370" key="GridCell.Tab.0.left" timestamp="1618896593074">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="370" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1618714717522" />
-    <state width="1791" height="370" key="GridCell.Tab.0.right" timestamp="1618714717523">
+    <state width="1791" height="370" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1618896593074" />
+    <state width="1791" height="370" key="GridCell.Tab.0.right" timestamp="1618896593074">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="370" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1618714717523" />
-    <state width="1788" height="429" key="GridCell.Tab.1.bottom" timestamp="1617957349316">
+    <state width="1791" height="370" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1618896593074" />
+    <state width="1791" height="389" key="GridCell.Tab.1.bottom" timestamp="1618895895663">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1788" height="429" key="GridCell.Tab.1.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1617957349316" />
-    <state width="1788" height="429" key="GridCell.Tab.1.center" timestamp="1617957349316">
+    <state width="1791" height="389" key="GridCell.Tab.1.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1618895895663" />
+    <state width="1791" height="389" key="GridCell.Tab.1.center" timestamp="1618895895662">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1788" height="429" key="GridCell.Tab.1.center/72.27.1848.1053@72.27.1848.1053" timestamp="1617957349316" />
-    <state width="1788" height="429" key="GridCell.Tab.1.left" timestamp="1617957349315">
+    <state width="1791" height="389" key="GridCell.Tab.1.center/72.27.1848.1053@72.27.1848.1053" timestamp="1618895895662" />
+    <state width="1791" height="389" key="GridCell.Tab.1.left" timestamp="1618895895662">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1788" height="429" key="GridCell.Tab.1.left/72.27.1848.1053@72.27.1848.1053" timestamp="1617957349315" />
-    <state width="1788" height="429" key="GridCell.Tab.1.right" timestamp="1617957349316">
+    <state width="1791" height="389" key="GridCell.Tab.1.left/72.27.1848.1053@72.27.1848.1053" timestamp="1618895895662" />
+    <state width="1791" height="389" key="GridCell.Tab.1.right" timestamp="1618895895663">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1788" height="429" key="GridCell.Tab.1.right/72.27.1848.1053@72.27.1848.1053" timestamp="1617957349316" />
+    <state width="1791" height="389" key="GridCell.Tab.1.right/72.27.1848.1053@72.27.1848.1053" timestamp="1618895895663" />
     <state x="476" y="239" width="1030" height="635" key="IDE.errors.dialog" timestamp="1617614504094">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="476" y="239" width="1030" height="635" key="IDE.errors.dialog/72.27.1848.1053@72.27.1848.1053" timestamp="1617614504094" />
-    <state x="492" y="27" width="1350" height="1053" key="SettingsEditor" timestamp="1618586281333">
+    <state x="492" y="27" width="1350" height="1053" key="SettingsEditor" timestamp="1618805190104">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="492" y="27" width="1350" height="1053" key="SettingsEditor/72.27.1848.1053@72.27.1848.1053" timestamp="1618586281333" />
+    <state x="492" y="27" width="1350" height="1053" key="SettingsEditor/72.27.1848.1053@72.27.1848.1053" timestamp="1618805190104" />
     <state x="492" y="192" width="1007" height="737" key="SettingsEditor/72.34.1848.1046@72.34.1848.1046" timestamp="1617793418024" />
-    <state x="720" y="321" width="542" height="472" key="chooseDestDirectoryDialog" timestamp="1618714706024">
+    <state x="720" y="321" width="542" height="472" key="chooseDestDirectoryDialog" timestamp="1618905559315">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="720" y="321" width="542" height="472" key="chooseDestDirectoryDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1618714706024" />
+    <state x="720" y="321" width="542" height="472" key="chooseDestDirectoryDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1618905559315" />
     <state x="205" y="27" width="1572" height="1053" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1617775208918">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="205" y="27" width="1572" height="1053" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1617775208918" />
+    <state x="722" y="451" width="538" height="212" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1618804114026">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="722" y="451" width="538" height="212" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/72.27.1848.1053@72.27.1848.1053" timestamp="1618804114026" />
     <state x="794" y="117" width="1080" height="848" key="org.intellij.images.editor.actions.BackgroundImageDialog" timestamp="1618581854059">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>

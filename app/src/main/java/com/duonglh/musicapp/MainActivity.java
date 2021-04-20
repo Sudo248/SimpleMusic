@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, PlayingActivity.class);
                 intent.putExtra("position", position)
                         .putExtra("startNewSong", true);
+                Intent service = new Intent(MainActivity.this, MusicService.class);
+                startService(service);
                 MainActivity.this.startActivityForResult(intent, REQUEST_FROM_PLAYING_ACTIVITY);
             }
         });

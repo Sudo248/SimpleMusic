@@ -18,9 +18,9 @@
 
         <Button
             android:id="@+id/comeBackButton"
-            android:layout_width="42dp"
-            android:layout_height="37dp"
-            android:background="@drawable/ic_baseline_chevron_left" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_baseline_arrow_left" />
 
         <TextView
             android:id="@+id/name_song_playing"
@@ -36,6 +36,7 @@
             android:singleLine="true"
             android:text="@string/nameSong"
             android:textSize="20sp"
+            android:textColor="#FFF"
             android:textStyle="bold" />
 
         <TextView
@@ -49,7 +50,17 @@
             android:layout_marginStart="1dp"
             android:layout_marginLeft="1dp"
             android:layout_marginTop="6dp"
+            android:textColor="#FFF"
             android:text="@string/nameAuthor" />
+
+        <Button
+
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_baseline_queue_music" />
     </RelativeLayout>
 
     <com.gauravk.audiovisualizer.visualizer.CircleLineVisualizer
