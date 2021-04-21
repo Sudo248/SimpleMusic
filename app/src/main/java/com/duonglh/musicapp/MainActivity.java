@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -50,11 +51,36 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        if(MyMediaPlayer.getInstance().getIDCurrentSong() == -1){
+//            startNewActivity();
+//        }
+//        else{
+//            continteActivity();
+//        }
+        startNewActivity();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void startNewActivity(){
         setContentView(R.layout.load_data);
         getSupportActionBar().hide();
         checkPermissions();
-
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void continteActivity(){
+        setContentView(R.layout.activity_main);
+        mapping();
+        if (!MyMediaPlayer.getInstance().getListSong().isEmpty()) {
+            createMediaPlay();
+            displayListSongs();
+            setClickListener();
+        } else {
+            Toast.makeText(MainActivity.this, "NO  MUSIC", Toast.LENGTH_LONG).show();
+        }
+        Log.e("Duong",""+MyMediaPlayer.getInstance().getListSong().size());
+    }
+
 
     private void mapping() {
         recyclerView = findViewById(R.id.listViewSongs);

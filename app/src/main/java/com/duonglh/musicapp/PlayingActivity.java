@@ -1,15 +1,22 @@
 package com.duonglh.musicapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.palette.graphics.Palette;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -236,6 +243,29 @@ public class PlayingActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).asBitmap()
                     .load(songPlaying.getImage())
                     .into(playingImageView);
+            Bitmap bitmap;
+            bitmap = BitmapFactory.decodeByteArray(songPlaying.getImage(),0,songPlaying.getImage().length);
+            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                @Override
+                public void onGenerated(@Nullable Palette palette) {
+                    assert palette != null;
+                    Palette.Swatch swatch = palette.getDominantSwatch();
+                    if(swatch != null){
+                        ConstraintLayout playingActivity = findViewById(R.id.playingActivity);
+                        playingActivity.setBackgroundResource(R.drawable.background);
+                        GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,
+                                new int[] {swatch.getRgb(), swatch.getRgb()});
+                        playingActivity.setBackground(gradientDrawable);
+                    }
+                    else{
+                        ConstraintLayout playingActivity = findViewById(R.id.playingActivity);
+                        playingActivity.setBackgroundResource(R.drawable.background);
+                        GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,
+                                new int[] {0xff000000, 0xff000000});
+                        playingActivity.setBackground(gradientDrawable);
+                    }
+                }
+            });
         }
         else{
             playingImageView.setImageResource(R.drawable.avatar);

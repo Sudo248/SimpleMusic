@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".PlayingActivity">
+    tools:context=".PlayingActivity"
+    android:id="@+id/playingActivity">
     <RelativeLayout
         android:id="@+id/title"
         android:background="@drawable/background_title"

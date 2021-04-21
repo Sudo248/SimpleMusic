@@ -7,6 +7,7 @@ import android.net.Uri;
 
 import com.duonglh.musicapp.model.Song.Song;
 
+import java.net.IDN;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,6 +26,10 @@ public class MyMediaPlayer {
             INSTANCE = new MyMediaPlayer();
         }
         return INSTANCE;
+    }
+
+    MyMediaPlayer(){
+        IDCurrentSong = -1;
     }
 
     public interface ViewSong {
