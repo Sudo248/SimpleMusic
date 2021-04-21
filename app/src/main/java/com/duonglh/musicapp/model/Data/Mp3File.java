@@ -27,7 +27,7 @@ public class Mp3File {
 
     @SuppressLint("StaticFieldLeak")
     private Context context;
-    private ArrayList<Song> listSong;
+    private ArrayList<Song> listSong = new ArrayList<>();
     private byte[] defaultImage;
 
     // get Data From Storage
@@ -35,7 +35,7 @@ public class Mp3File {
     public ArrayList<Song> loadAllData(Context context) {
         this.context = context;
         // get From DataBase
-        listSong = (ArrayList<Song>) SongDataBase.getInstance(context).songDAO().getListSongs();
+//        listSong = (ArrayList<Song>) SongDataBase.getInstance(context).songDAO().getListSongs();
         listSong.addAll(getFromMediaAudio());
         listSong.addAll(getFromOtherLocation(Environment.getExternalStorageDirectory()));
         listSong = (ArrayList<Song>) listSong.stream().sorted(Comparator.comparing(Song::getNameSong))
@@ -46,57 +46,64 @@ public class Mp3File {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private ArrayList<Song> getFromMediaAudio() {
-        ArrayList<Song> listSongs = new ArrayList<>();
+        ArrayList<Song> mListSong = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-
+        final String project[] = {
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.DURATION
+        };
         @SuppressLint("Recycle")
-        Cursor cursor = context.getContentResolver().query(uri, null, "is_music != 0", null, null);
-        if (cursor != null && cursor.moveToFirst()) {
+        Cursor cursor = context.getContentResolver().query(uri, project, "is_music != 0", null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
             do {
-                String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+                String path = cursor.getString(0);
                 byte[] image = null;//getImageSong(path);
-                String nameSong = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-                String nameAuthor = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-                String duration = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
-
+                String nameSong = cursor.getString(1);
+                String nameAuthor = cursor.getString(2);
+                String duration = cursor.getString(3);
                 Song song = new Song(path, image, nameSong, nameAuthor, duration);
                 if (!hasSong(song)) {
-                    listSongs.add(song);
+                    mListSong.add(song);
                     SongDataBase.getInstance(context).songDAO().insertSong(song);
                 }
             } while (cursor.moveToNext());
+            cursor.close();
         }
-        return listSongs;
+        return mListSong;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private ArrayList<Song> getFromOtherLocation(File localFile) {
-        ArrayList<Song> listSongs = new ArrayList<>();
+        ArrayList<Song> mListSong = new ArrayList<>();
         File[] files = localFile.listFiles();
         if (files != null) {
             for (File singleFile : files) {
                 if (singleFile.isDirectory() && !singleFile.isHidden()) {
                     String nameDirector = singleFile.getName();
                     if (nameDirector.equals("Zing MP3") || nameDirector.equals("Music")) {
-                        listSongs.addAll(getFromOtherLocation(singleFile));
+                        mListSong.addAll(getFromOtherLocation(singleFile));
                     }
                 } else {
                     if (singleFile.getName().endsWith(".mp3") || singleFile.getName().endsWith(".wav")) {
                         Song song = getDataSong(singleFile.toString());
                         if (!hasSong(song)) {
-                            listSongs.add(song);
+                            mListSong.add(song);
                             SongDataBase.getInstance(context).songDAO().insertSong(song);
                         }
                     }
                 }
             }
         }
-        return listSongs;
+        return mListSong;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private boolean hasSong(@NotNull Song song) {
-        List<Song> list = listSong.stream()
+        List<Song> list = new ArrayList<>();
+        list = listSong.stream()
                 .filter(item -> item.getNameSong().equals(song.getNameSong()))
                 .collect(Collectors.toList());
 

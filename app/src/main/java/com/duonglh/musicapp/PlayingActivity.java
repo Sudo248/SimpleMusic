@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.palette.graphics.Palette;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
@@ -24,6 +27,9 @@ import com.bumptech.glide.Glide;
 import com.duonglh.musicapp.model.MyMediaPlayer;
 import com.duonglh.musicapp.model.Song.Song;
 import com.gauravk.audiovisualizer.visualizer.CircleLineVisualizer;
+
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -246,6 +252,7 @@ public class PlayingActivity extends AppCompatActivity {
             Bitmap bitmap;
             bitmap = BitmapFactory.decodeByteArray(songPlaying.getImage(),0,songPlaying.getImage().length);
             Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                @SuppressLint("ResourceAsColor")
                 @Override
                 public void onGenerated(@Nullable Palette palette) {
                     assert palette != null;
@@ -256,6 +263,22 @@ public class PlayingActivity extends AppCompatActivity {
                         GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,
                                 new int[] {swatch.getRgb(), swatch.getRgb()});
                         playingActivity.setBackground(gradientDrawable);
+                        Log.e("Color", ""+swatch.getRgb());
+                        if(swatch.getRgb() > - 2368548){
+                            int black = Color.rgb(0,0,0);
+                            durationView.setTextColor(black);
+                            totalDurationView.setTextColor(black);
+                            nameAuthorView.setTextColor(black);
+                            nameSongView.setTextColor(black);
+
+                        }
+                        else{
+                            int white = Color.rgb(255,255,255);
+                            durationView.setTextColor(white);
+                            totalDurationView.setTextColor(white);
+                            nameAuthorView.setTextColor(white);
+                            nameSongView.setTextColor(white);
+                        }
                     }
                     else{
                         ConstraintLayout playingActivity = findViewById(R.id.playingActivity);
@@ -276,6 +299,14 @@ public class PlayingActivity extends AppCompatActivity {
             circleVisualizer.setEnabled(false);
             circleVisualizer.setAudioSessionId(id);
         }
+        if(MyMediaPlayer.MUSIC.isPlaying()){
+            animationRotation();
+            playButton.setBackgroundResource(R.drawable.ic_baseline_pause);
+        }
+        else{
+            playingImageView.animate().cancel();
+            playButton.setBackgroundResource(R.drawable.ic_baseline_play);
+        }
     }
 
     private void animationRotation(){
@@ -290,7 +321,8 @@ public class PlayingActivity extends AppCompatActivity {
                 .setInterpolator(new LinearInterpolator()).start();
     }
 
-    private String timeToString(int duration){
+    @Contract(pure = true)
+    private @NotNull String timeToString(int duration){
         String time;
         int hours = duration / 1000 / 60 / 60;
         int minutes = duration / 1000 / 60 % 60;

@@ -15,7 +15,7 @@ public class MyMediaPlayer {
     @SuppressLint("StaticFieldLeak")
     public static MediaPlayer MUSIC = new MediaPlayer();
     @SuppressLint("StaticFieldLeak")
-    private static MyMediaPlayer INSTANCE;
+    private static MyMediaPlayer INSTANCE = null;
     private Context currentContext;
     private ArrayList<Song> listSong;
     private int IDCurrentSong;
@@ -28,9 +28,9 @@ public class MyMediaPlayer {
         return INSTANCE;
     }
 
-    MyMediaPlayer(){
-        IDCurrentSong = -1;
-    }
+    //MyMediaPlayer(){
+//        IDCurrentSong = -1;
+//    }
 
     public interface ViewSong {
         void update();

@@ -56,11 +56,12 @@
 
         <Button
 
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="0dp"
             android:background="@drawable/ic_baseline_queue_music" />
     </RelativeLayout>
 
@@ -106,22 +107,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circleVisualizer">
-
-        <TextView
-            android:id="@+id/duration"
+        <RelativeLayout
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="40dp"
-            android:singleLine="true"
-            android:text="@string/duration"
-            android:textColor="#FFF"
-            android:textSize="18sp" />
+            android:layout_marginTop="40dp">
+            <TextView
+                android:id="@+id/duration"
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@string/duration"
+                android:textColor="#FFF"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
 
         <SeekBar
             android:id="@+id/seekBar"
@@ -129,7 +132,6 @@
             android:layout_height="wrap_content"
             android:progressDrawable="@drawable/seekbar_background"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
@@ -137,21 +139,27 @@
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:id="@+id/totalDuration"
+        <RelativeLayout
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
-            android:singleLine="true"
-            android:text="@string/duration"
-            android:textColor="#FFF"
-            android:textSize="18sp" />
+            android:layout_marginEnd="2dp">
+
+            <TextView
+                android:id="@+id/totalDuration"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@string/duration"
+                android:textColor="#FFF"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+
 
     </RelativeLayout>
 
