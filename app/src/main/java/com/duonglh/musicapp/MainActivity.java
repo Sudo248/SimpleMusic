@@ -3,65 +3,77 @@ package com.duonglh.musicapp;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Looper;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.palette.graphics.Palette;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.duonglh.musicapp.model.Data.Mp3File;
-import com.duonglh.musicapp.model.MyMediaPlayer;
 import com.duonglh.musicapp.model.Song.Song;
 import com.duonglh.musicapp.model.Song.SongAdapter;
 import com.duonglh.musicapp.model.Song.SongDataBase;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MediaPlayerAction{
     public static final int REQUEST_FROM_PLAYING_ACTIVITY = 1;
     public static final int REQUEST_PERMISSION = 2;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private CircleImageView imageViewSongPlaying;
     private TextView textViewNameSongPlaying, textViewAuthorPlaying;
-    private ImageButton previousButton, nextButton, playingButton;
+    private Button previousButton, nextButton, playingButton;
     private SongAdapter songAdapter;
     private SearchView searchView;
     private ConstraintLayout mainPlaying;
+    private MusicService musicService;
+    private UpdateView updateView;
+    private boolean isBoundService;
+    private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MusicService.MusicBinder musicBinder = (MusicService.MusicBinder) service;
+            musicService = musicBinder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            musicService = null;
+        }
+    };
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if(MyMediaPlayer.getInstance().getIDCurrentSong() == -1){
-//            startNewActivity();
-//        }
-//        else{
-//            continteActivity();
-//        }
+        Intent service = new Intent(MainActivity.this, MusicService.class);
+        isBoundService = bindService(service, serviceConnection, BIND_AUTO_CREATE);
         startNewActivity();
     }
 
@@ -76,27 +88,25 @@ public class MainActivity extends AppCompatActivity {
     private void continteActivity(){
         setContentView(R.layout.activity_main);
         mapping();
-        if (!MyMediaPlayer.getInstance().getListSong().isEmpty()) {
-            createMediaPlay();
-            displayListSongs();
-            setClickListener();
-        } else {
-            Toast.makeText(MainActivity.this, "NO  MUSIC", Toast.LENGTH_LONG).show();
-        }
-        Log.e("Duong",""+MyMediaPlayer.getInstance().getListSong().size());
+        musicService.setUpdateView(updateView);
+        musicService.setCallBack(this);
+        displayListSongs();
+        mainPlaying.setVisibility(View.VISIBLE);
+        setView();
+        prepare();
     }
 
-
     private void mapping() {
-        recyclerView = findViewById(R.id.listViewSongs);
-        progressBar = findViewById(R.id.progress_music);
-        imageViewSongPlaying = findViewById(R.id.main_playing_music_icon);
+        recyclerView            = findViewById(R.id.listViewSongs);
+        progressBar             = findViewById(R.id.progress_music);
+        imageViewSongPlaying    = findViewById(R.id.main_playing_music_icon);
         textViewNameSongPlaying = findViewById(R.id.main_playing_name_song);
-        textViewAuthorPlaying = findViewById(R.id.main_name_author);
-        previousButton = findViewById(R.id.main_previous_button);
-        nextButton = findViewById(R.id.main_next_button);
-        playingButton = findViewById(R.id.main_play_button);
-        mainPlaying = findViewById(R.id.main_playing);
+        textViewAuthorPlaying   = findViewById(R.id.main_name_author);
+        previousButton          = findViewById(R.id.main_previous_button);
+        nextButton              = findViewById(R.id.main_next_button);
+        playingButton           = findViewById(R.id.main_play_button);
+        mainPlaying             = findViewById(R.id.main_playing);
+        searchView              = findViewById(R.id.searchView);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -127,19 +137,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
-
-    private void createMediaPlay() {
-        MyMediaPlayer.getInstance().setContext(this);
-        MyMediaPlayer.getInstance().create(0);
-        MyMediaPlayer.getInstance().setViewSong(new MyMediaPlayer.ViewSong() {
-            @Override
-            public void update() {
-                setView();
-            }
-        });
-    }
-
     private void displayListSongs() {
         songAdapter = new SongAdapter(new SongAdapter.IsClickFavorite() {
             @Override
@@ -149,25 +146,65 @@ public class MainActivity extends AppCompatActivity {
         }, new SongAdapter.IsOnClickItem() {
             @Override
             public void onClickItem(int position) {
-                Intent intent = new Intent(MainActivity.this, PlayingActivity.class);
-                intent.putExtra("position", position)
-                        .putExtra("startNewSong", true);
-                Intent service = new Intent(MainActivity.this, MusicService.class);
-                startService(service);
-                MainActivity.this.startActivityForResult(intent, REQUEST_FROM_PLAYING_ACTIVITY);
+                StartPlayingActivity(position, true);
             }
         });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        songAdapter.setData(MainActivity.this, MyMediaPlayer.getInstance().getListSong());
+        songAdapter.setData(MainActivity.this, Mp3File.getInstance().getListSong());
         recyclerView.setAdapter(songAdapter);
-        setView();
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                Song song = Mp3File.getInstance().getListSong().get(position);
+                Mp3File.getInstance().getListSong().remove(position);
+                songAdapter.notifyDataSetChanged();
+                musicService.removeSong(position);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SongDataBase.getInstance(MainActivity.this).songDAO().deleteSong(song);
+                    }
+                }).start();
+            }
+        });
+
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        SearchManager searchManager = (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.onActionViewExpanded();
+        if(!searchView.isFocused()) {
+            searchView.clearFocus();
+        }
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                songAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                songAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
     }
 
-    private void setClickListener() {
-
-        if (MyMediaPlayer.MUSIC.isPlaying()) {
+    private void prepare() {
+        if (musicService.isPlaying()) {
             animationRotation();
             playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
         } else {
@@ -178,69 +215,37 @@ public class MainActivity extends AppCompatActivity {
         playingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (MyMediaPlayer.MUSIC.isPlaying()) {
-                    imageViewSongPlaying.animate().cancel();
-                    playingButton.setBackgroundResource(R.drawable.ic_baseline_play);
-                    MyMediaPlayer.MUSIC.pause();
-                } else {
-                    animationRotation();
-                    MyMediaPlayer.MUSIC.start();
-                    playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
-                }
+                play();
             }
         });
-
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyMediaPlayer.getInstance().nextSong();
-                animationRotation();
-                playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
-                setView();
+                nextSong();
             }
         });
-
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyMediaPlayer.getInstance().previousSong();
-                animationRotation();
-                playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
-                setView();
+                previousSong();
             }
         });
 
         mainPlaying.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PlayingActivity.class);
-                intent.putExtra("position", -1)
-                        .putExtra("startNewSong", false);
-                MainActivity.this.startActivityForResult(intent, REQUEST_FROM_PLAYING_ACTIVITY);
+                StartPlayingActivity(-1,false);
             }
         });
 
-        Thread updateProcessBar = new Thread() {
+
+        this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                int totalDuration = MyMediaPlayer.MUSIC.getDuration();
-                int currentDuration = 0;
-                while (currentDuration <= totalDuration) {
-                    try {
-                        sleep(1000);
-                        currentDuration = MyMediaPlayer.MUSIC.getCurrentPosition();
-                        progressBar.setProgress(currentDuration);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                run();
+                progressBar.setProgress(musicService.getCurrentPosition());
+                mainThreadHandler.postDelayed(this, 500);
             }
-        };
-        updateProcessBar.setDaemon(true);
-        updateProcessBar.start();
+        });
 
     }
 
@@ -257,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setView() {
-        Song playingSong = MyMediaPlayer.getInstance().getCurrentSong();
+        Song playingSong = musicService.getCurrentSong();
         if (playingSong.getImage() != null) {
             Glide.with(getApplicationContext()).asBitmap()
                     .load(playingSong.getImage())
@@ -267,36 +272,14 @@ public class MainActivity extends AppCompatActivity {
         }
         textViewNameSongPlaying.setText(playingSong.getNameSong());
         textViewAuthorPlaying.setText(playingSong.getNameAuthor());
-        progressBar.setMax(MyMediaPlayer.MUSIC.getDuration());
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.main_menu, menu);
-        SearchManager searchManager = (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.search_bar).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                songAdapter.getFilter().filter(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                songAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-
-        return true;
+        progressBar.setMax(musicService.getDuration());
     }
 
     @Override
     public void onBackPressed() {
-        if (!searchView.isIconified()) {
+        if (!searchView.getQuery().equals("")) {
+            searchView.setQuery("",false);
+            searchView.clearFocus();
             searchView.setIconified(true);
             return;
         }
@@ -307,16 +290,53 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_FROM_PLAYING_ACTIVITY) {
-            MyMediaPlayer.getInstance().setContext(this);
-            setView();
-            if (MyMediaPlayer.MUSIC.isPlaying()) {
-                animationRotation();
-                playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
-            } else {
-                imageViewSongPlaying.animate().cancel();
-                playingButton.setBackgroundResource(R.drawable.ic_baseline_play);
+            if(musicService != null) {
+                musicService.setUpdateView(updateView);
+                musicService.setCallBack(this);
+                if(mainPlaying.getVisibility() == View.GONE){
+                    mainPlaying.setVisibility(View.VISIBLE);
+                    prepare();
+                }
+
+                setView();
+                if (musicService.isPlaying()) {
+                    animationRotation();
+                    playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
+                } else {
+                    imageViewSongPlaying.animate().cancel();
+                    playingButton.setBackgroundResource(R.drawable.ic_baseline_play);
+                }
             }
         }
+    }
+
+    @Override
+    public void play() {
+        if (musicService.isPlaying()) {
+            imageViewSongPlaying.animate().cancel();
+            playingButton.setBackgroundResource(R.drawable.ic_baseline_play);
+            musicService.pause();
+        } else {
+            animationRotation();
+            musicService.play();
+            playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
+        }
+    }
+
+    @Override
+    public void nextSong() {
+        musicService.nextSong();
+        animationRotation();
+        playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
+        setView();
+    }
+
+    @Override
+    public void previousSong() {
+        musicService.previousSong();
+        animationRotation();
+        playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
+        setView();
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -324,10 +344,9 @@ public class MainActivity extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.R)
         @Override
         protected String doInBackground(Void... voids) {
-            Mp3File mp3file = new Mp3File();
-            mp3file.loadAllData(MainActivity.this);
+            Mp3File.getInstance().loadAllData(MainActivity.this);
             try {
-                Thread.sleep(4000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -338,17 +357,36 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            MainActivity.this.getSupportActionBar().show();
             setContentView(R.layout.activity_main);
             mapping();
-            if (!MyMediaPlayer.getInstance().getListSong().isEmpty()) {
-                createMediaPlay();
+            updateView = new UpdateView() {
+                @Override
+                public void update() {
+                    setView();
+                }
+            };
+            if (!Mp3File.getInstance().getListSong().isEmpty()) {
+                musicService.setUpdateView(updateView);
+                musicService.setCallBack(MainActivity.this);
                 displayListSongs();
-                setClickListener();
             } else {
                 Toast.makeText(MainActivity.this, "NO  MUSIC", Toast.LENGTH_LONG).show();
             }
         }
     }
 
+    private void StartPlayingActivity(int position, boolean isStartNewSong){
+        Intent intent = new Intent(MainActivity.this, PlayingActivity.class);
+        intent.putExtra("position", position);
+        intent.putExtra("startNewSong", isStartNewSong);
+        startActivityForResult(intent, REQUEST_FROM_PLAYING_ACTIVITY);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intent = new Intent(this, MusicService.class);
+        stopService(intent);
+        unbindService(serviceConnection);
+    }
 }

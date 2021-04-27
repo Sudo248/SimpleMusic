@@ -17,11 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
-        <Button
-            android:id="@+id/comeBackButton"
+        <ImageButton
+            android:id="@+id/backButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/ic_baseline_arrow_left" />
+            android:layout_alignParentTop="true"
+            android:background="@drawable/ic_baseline_white_arrow_left"
+            android:onClick="clickBackButton"
+            />
 
         <TextView
             android:id="@+id/name_song_playing"
@@ -29,9 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="3dp"
-            android:layout_marginLeft="3dp"
-            android:layout_toEndOf="@+id/comeBackButton"
-            android:layout_toRightOf="@+id/comeBackButton"
+            android:layout_toEndOf="@+id/backButton"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:singleLine="true"
@@ -62,20 +63,21 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="0dp"
-            android:background="@drawable/ic_baseline_queue_music" />
+            android:background="@drawable/ic_baseline_queue_music"
+            app:backgroundTint="@color/white" />
     </RelativeLayout>
 
     <com.gauravk.audiovisualizer.visualizer.CircleLineVisualizer
         android:id="@+id/circleVisualizer"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_marginTop="70dp"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="150dp"
         app:avColor="#FF0202"
-        app:avDensity="0.5"
+        app:avDensity="1"
         app:avSpeed="normal"
         app:avType="outline"
-        app:avWidth="5dp"
+        app:avWidth="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.571"
@@ -85,14 +87,12 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_playing_song"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_marginStart="120dp"
         android:layout_marginLeft="120dp"
         android:layout_marginEnd="120dp"
         android:layout_marginRight="120dp"
-        app:civ_border_color="#E40909"
-        app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/circleVisualizer"
         app:layout_constraintEnd_toEndOf="@+id/circleVisualizer"
         app:layout_constraintStart_toStartOf="@+id/circleVisualizer"
@@ -103,7 +103,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="389dp"
         android:layout_height="64dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circleVisualizer">
@@ -130,7 +130,6 @@
             android:id="@+id/seekBar"
             android:layout_width="358dp"
             android:layout_height="wrap_content"
-            android:progressDrawable="@drawable/seekbar_background"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
@@ -138,7 +137,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:progressDrawable="@drawable/seekbar_background"
+            />
         <RelativeLayout
             android:layout_width="70dp"
             android:layout_height="wrap_content"
@@ -167,57 +168,57 @@
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_marginTop="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_playing_song">
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
-        <ImageButton
+        <Button
             android:id="@+id/shuffle"
+            android:onClick="clickShuffleButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/ic_baseline_shuffle_on" />
+            android:background="@drawable/ic_baseline_shuffle_on"
+            app:backgroundTint="@color/red_light" />
 
-        <ImageButton
+        <Button
             android:id="@+id/previous"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/ic_baseline_skip_previous"
-            android:layout_marginEnd="10dp" />
+            app:backgroundTint="@android:color/holo_red_light" />
 
-        <ImageButton
+        <Button
             android:id="@+id/playing_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:background="@drawable/ic_baseline_pause" />
+            android:background="@drawable/ic_baseline_pause"
+            app:backgroundTint="@color/av_red" />
 
-        <ImageButton
+        <Button
             android:id="@+id/next"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
             android:background="@drawable/ic_baseline_skip_next"
-            android:layout_marginStart="10dp" />
+            app:backgroundTint="@android:color/holo_red_light" />
 
-        <ImageButton
+        <Button
             android:id="@+id/repeat"
+            android:onClick="clickRepeatButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/ic_baseline_repeat_on"
-            android:layout_marginStart="10dp" />
+            app:backgroundTint="@color/red_light" />
 
     </LinearLayout>
 

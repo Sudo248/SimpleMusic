@@ -26,21 +26,32 @@ import java.util.stream.Collectors;
 public class Mp3File {
 
     @SuppressLint("StaticFieldLeak")
+    private static Mp3File MP3INSTANCE = null;
     private Context context;
-    private ArrayList<Song> listSong = new ArrayList<>();
-    private byte[] defaultImage;
+    private ArrayList<Song> listSong;
+
+    public Mp3File(){
+        listSong = new ArrayList<>();
+    }
+
+    public static Mp3File getInstance(){
+        if(MP3INSTANCE == null){
+            MP3INSTANCE = new Mp3File();
+        }
+        return MP3INSTANCE;
+    }
 
     // get Data From Storage
     @RequiresApi(api = Build.VERSION_CODES.R)
     public ArrayList<Song> loadAllData(Context context) {
         this.context = context;
         // get From DataBase
-//        listSong = (ArrayList<Song>) SongDataBase.getInstance(context).songDAO().getListSongs();
+        SongDataBase.getInstance(context).songDAO().deleteAllSong();
+        listSong = (ArrayList<Song>) SongDataBase.getInstance(context).songDAO().getListSongs();
         listSong.addAll(getFromMediaAudio());
         listSong.addAll(getFromOtherLocation(Environment.getExternalStorageDirectory()));
         listSong = (ArrayList<Song>) listSong.stream().sorted(Comparator.comparing(Song::getNameSong))
                 .collect(Collectors.toList());
-        MyMediaPlayer.getInstance().setListSong(listSong);
         return listSong;
     }
 
@@ -49,23 +60,22 @@ public class Mp3File {
         ArrayList<Song> mListSong = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         final String project[] = {
-                MediaStore.Audio.Media.DATA,
-                MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.ARTIST,
-                MediaStore.Audio.Media.DURATION
+                MediaStore.Audio.Media.TITLE,    // nameSong
+                MediaStore.Audio.Media.DATA,     // path
+                MediaStore.Audio.Media.ARTIST,   // namAuthor
+                MediaStore.Audio.Media.DURATION  // time
         };
         @SuppressLint("Recycle")
         Cursor cursor = context.getContentResolver().query(uri, project, "is_music != 0", null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
+        if (cursor != null && cursor.moveToFirst()) {
             do {
-                String path = cursor.getString(0);
-                byte[] image = null;//getImageSong(path);
-                String nameSong = cursor.getString(1);
-                String nameAuthor = cursor.getString(2);
-                String duration = cursor.getString(3);
-                Song song = new Song(path, image, nameSong, nameAuthor, duration);
-                if (!hasSong(song)) {
+                String nameSong = cursor.getString(0);
+                if (!hasSong(nameSong)) {
+                    String path = cursor.getString(1);
+                    byte[] image = null;//getImageSong(path);
+                    String nameAuthor = cursor.getString(2);
+                    String duration = cursor.getString(3);
+                    Song song = new Song(path, image, nameSong, nameAuthor, duration);
                     mListSong.add(song);
                     SongDataBase.getInstance(context).songDAO().insertSong(song);
                 }
@@ -88,11 +98,19 @@ public class Mp3File {
                     }
                 } else {
                     if (singleFile.getName().endsWith(".mp3") || singleFile.getName().endsWith(".wav")) {
-                        Song song = getDataSong(singleFile.toString());
-                        if (!hasSong(song)) {
+                        String path = singleFile.toString();
+                        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                        retriever.setDataSource(path);
+                        String nameSong = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                        if (!hasSong(nameSong)) {
+                            String nameAuthor = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                            byte[] image = retriever.getEmbeddedPicture();
+                            String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                            Song song = new Song(path, image, nameSong, nameAuthor, duration);
                             mListSong.add(song);
                             SongDataBase.getInstance(context).songDAO().insertSong(song);
                         }
+                        retriever.release();
                     }
                 }
             }
@@ -101,28 +119,24 @@ public class Mp3File {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    private boolean hasSong(@NotNull Song song) {
+    private boolean hasSong(@NotNull String nameSong) {
         List<Song> list = new ArrayList<>();
         list = listSong.stream()
-                .filter(item -> item.getNameSong().equals(song.getNameSong()))
+                .filter(item -> item.getNameSong().equals(nameSong))
                 .collect(Collectors.toList());
-
         return list.size() > 0;
     }
 
-    private Song getDataSong(String path) {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(path);
-        String nameSong = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-        String nameAuthor = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-        byte[] image = retriever.getEmbeddedPicture();
-        String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        retriever.release();
-        return new Song(path, image, nameSong, nameAuthor, duration);
+    private void getDataSong(String path) {
+
     }
 
     private void getDefaultImage(){
 
+    }
+
+    public ArrayList<Song> getListSong(){
+        return listSong;
     }
 
 }

@@ -28,12 +28,25 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
 
-        <activity android:name=".PlayingActivity">
+        <activity android:name=".PlayingActivity"> </activity>
 
-        </activity>
-        <service android:name=".MusicService" />
+        <service android:name=".MusicService"
+            android:enabled="true"
+            android:exported="true"/>
+
+        <receiver android:name=".MusicReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="action_Play"/>
+                <action android:name="action_Previous"/>
+                <action android:name="action_Next"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

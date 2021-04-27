@@ -126,12 +126,12 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
         public SongViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewSong = itemView.findViewById(R.id.image_song);
-            imageViewStart = itemView.findViewById(R.id.star);
-            textViewNameSong = itemView.findViewById(R.id.name_song);
+            imageViewSong       = itemView.findViewById(R.id.image_song);
+            imageViewStart      = itemView.findViewById(R.id.star);
+            textViewNameSong    = itemView.findViewById(R.id.name_song);
+            textViewNameAuthor  = itemView.findViewById(R.id.name_author);
+            textViewTime        = itemView.findViewById(R.id.time);
             textViewNameSong.setSelected(true);
-            textViewNameAuthor = itemView.findViewById(R.id.name_author);
-            textViewTime = itemView.findViewById(R.id.time);
         }
     }
 
