@@ -3,11 +3,10 @@ package com.duonglh.musicapp.model.Song;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "songs")
+@Entity(tableName = "table_song")
 public class Song {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    //@ColumnInfo(name = "imageID")
     private byte[] image;
     private String path;
     private String nameSong;

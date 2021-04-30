@@ -13,10 +13,10 @@ public interface SongDAO {
     @Insert
     void insertSong(Song song);
 
-    @Query("SELECT * FROM songs")
+    @Query("SELECT * FROM table_song")
     List<Song> getListSongs();
 
-    @Query("SELECT * FROM songs WHERE nameSong = :nameSong")
+    @Query("SELECT * FROM table_song WHERE nameSong = :nameSong")
     List<Song> getListSongSame(String nameSong);
 
     @Update
@@ -25,6 +25,6 @@ public interface SongDAO {
     @Delete
     void deleteSong(Song song);
 
-    @Query("DELETE FROM songs")
+    @Query("DELETE FROM table_song")
     void deleteAllSong();
 }

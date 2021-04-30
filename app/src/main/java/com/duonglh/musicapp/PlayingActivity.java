@@ -14,24 +14,23 @@ import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.duonglh.musicapp.model.Data.Mp3File;
 import com.duonglh.musicapp.model.Song.Song;
 import com.gauravk.audiovisualizer.visualizer.CircleLineVisualizer;
 
@@ -42,8 +41,8 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PlayingActivity extends AppCompatActivity implements MediaPlayerAction{
-    private Button playButton, repeatButton, nextButton, previousButton;
+public class PlayingActivity extends AppCompatActivity implements MyInterface.MediaPlayerAction{
+    private Button playButton, repeatButton, nextButton, previousButton, shuffleButton;
     private ImageButton backButton;
     private TextView durationView, totalDurationView, nameSongView, nameAuthorView;
     private CircleImageView playingImageView;
@@ -55,15 +54,14 @@ public class PlayingActivity extends AppCompatActivity implements MediaPlayerAct
     private MusicService musicService;
     private boolean isBoundService, isTouchSeekBar = false;
     private ConstraintLayout playingActivity;
+    private MusicService.MusicBinder musicBinder;
 
     private final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            MusicService.MusicBinder musicBinder = (MusicService.MusicBinder) service;
-            musicService = musicBinder.getService();
-            prepare();
+           musicBinder = (MusicService.MusicBinder) service;
+           new ConnectService().execute();
         }
-
         @Override
         public void onServiceDisconnected(ComponentName name) {
             musicService = null;
@@ -73,34 +71,29 @@ public class PlayingActivity extends AppCompatActivity implements MediaPlayerAct
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_playing);
+        setContentView(R.layout.load_data);
         Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Thread connection = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Intent service = new Intent(PlayingActivity.this, MusicService.class);
-                isBoundService = bindService(service, serviceConnection, BIND_AUTO_CREATE);
-            }
-        });
-        connection.start();
-        mapping();
+        if(!isBoundService){
+            Intent bindService = new Intent(PlayingActivity.this, MusicService.class);
+            isBoundService = bindService(bindService, serviceConnection, BIND_AUTO_CREATE);
+        }
         Intent intent       = this.getIntent();
         position            = intent.getIntExtra("position",-1);
         startNewSong        = intent.getBooleanExtra("startNewSong", true);
-        Intent service = new Intent(this, MusicService.class);
+        Intent service      = new Intent(this, MusicService.class);
         service.putExtra("CurrentSong", position);
         startService(service);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
+    protected void onPause() {
+        super.onPause();
+        isBoundService = false;
     }
 
     @Override
@@ -109,7 +102,13 @@ public class PlayingActivity extends AppCompatActivity implements MediaPlayerAct
         finishActivity();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     private void mapping(){
+        circleVisualizer     = findViewById(R.id.circleVisualizer);
         playButton           = findViewById(R.id.playing_button);
         repeatButton         = findViewById(R.id.repeat);
         nextButton           = findViewById(R.id.next);
@@ -120,14 +119,14 @@ public class PlayingActivity extends AppCompatActivity implements MediaPlayerAct
         nameAuthorView       = findViewById(R.id.name_author_playing);
         playingImageView     = findViewById(R.id.image_playing_song);
         seekBar              = findViewById(R.id.seekBar);
-        circleVisualizer     = findViewById(R.id.circleVisualizer);
         playingActivity      = findViewById(R.id.playingActivity);
         backButton           = findViewById(R.id.backButton);
+        shuffleButton        = findViewById(R.id.shuffle);
     }
 
     private void prepare(){
 
-        musicService.setUpdateView(new UpdateView() {
+        musicService.setUpdateView(new MyInterface.UpdateView() {
             @Override
             public void update() {
                 setView();
@@ -167,6 +166,40 @@ public class PlayingActivity extends AppCompatActivity implements MediaPlayerAct
             @Override
             public void onClick(View v) {
                 previousSong();
+            }
+        });
+
+        repeatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(musicService.isLooping()){
+                    musicService.setLoop(false);
+                    repeatButton.setBackgroundResource(R.drawable.ic_baseline_repeat_off);
+                }
+                else{
+                    musicService.setLoop(true);
+                    repeatButton.setBackgroundResource(R.drawable.ic_baseline_repeat_on);
+                }
+                if(musicService.isShuffle()){
+                    shuffleButton.performClick();
+                }
+            }
+        });
+
+        shuffleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(musicService.isShuffle()){
+                    musicService.setShuffle(false);
+                    shuffleButton.setBackgroundResource(R.drawable.ic_baseline_shuffle_off);
+                }
+                else{
+                    musicService.setShuffle(true);
+                    shuffleButton.setBackgroundResource(R.drawable.ic_baseline_shuffle_on);
+                }
+                if(musicService.isLooping()){
+                    repeatButton.performClick();
+                }
             }
         });
 
@@ -210,85 +243,60 @@ public class PlayingActivity extends AppCompatActivity implements MediaPlayerAct
         finishActivity();
     }
 
-    public void clickRepeatButton(View view){
-        if(musicService.isLooping()){
-            musicService.setLoop(false);
-            view.setBackgroundResource(R.drawable.ic_baseline_repeat_on);
-        }
-        else{
-            musicService.setLoop(true);
-            view.setBackgroundResource(R.drawable.ic_baseline_repeat);
-        }
-    }
-
-    public void clickShuffleButton(View view){
-        if(musicService.isShuffle()){
-            musicService.setShuffle(false);
-            view.setBackgroundResource(R.drawable.ic_baseline_shuffle_on);
-        }
-        else{
-            musicService.setShuffle(true);
-            view.setBackgroundResource(R.drawable.ic_baseline_shuffle);
-        }
-        if(musicService.isLooping()){
-            repeatButton.performClick();
-        }
-    }
-
     private void setView(){
         Song songPlaying = musicService.getCurrentSong();
+        Bitmap bitmap;
         nameSongView.setText(songPlaying.getNameSong());
+        nameSongView.setSelected(true);
         nameAuthorView.setText(songPlaying.getNameAuthor());
         seekBar.setMax(musicService.getDuration());
         if(songPlaying.getImage() != null) {
             Glide.with(getApplicationContext()).asBitmap()
                     .load(songPlaying.getImage())
                     .into(playingImageView);
-
-            Bitmap bitmap;
             bitmap = BitmapFactory.decodeByteArray(songPlaying.getImage(),0,songPlaying.getImage().length);
-            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                @SuppressLint({"ResourceAsColor", "UseCompatLoadingForColorStateLists"})
-                @Override
-                public void onGenerated(@Nullable Palette palette) {
-                    assert palette != null;
-                    Palette.Swatch swatch = palette.getDominantSwatch();
-
-                    int color = Color.rgb(255,255,255); //white
-                    GradientDrawable gradientDrawable;
-                    if(swatch != null){
-                        int RGB = swatch.getRgb();
-                        int red = Color.red(RGB);
-                        int green = Color.green(RGB);
-                        int blue = Color.blue(RGB);
-                        gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,
-                                new int[] {RGB, RGB});
-                        if(red > 180 && green > 180 && blue > 180){
-                            color = Color.rgb(0,0,0);//black
-
-                        }
-                        circleVisualizer.setColor(Color.rgb((128+red)%255, (128+green)%255, (128+blue)%255));
-                    }
-                    else{
-                        gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,
-                                new int[] {0xff000000, 0xff000000});
-                    }
-                    durationView.setTextColor(color);
-                    totalDurationView.setTextColor(color);
-                    nameAuthorView.setTextColor(color);
-                    nameSongView.setTextColor(color);
-                    playingActivity.setBackground(gradientDrawable);
-                    if(color == Color.rgb(255,255,255))
-                        backButton.setBackgroundResource(R.drawable.ic_baseline_white_arrow_left);
-                    else backButton.setBackgroundResource(R.drawable.ic_baseline_black_arrow_left);
-
-                }
-            });
         }
         else{
             playingImageView.setImageResource(R.drawable.avatar);
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
         }
+
+        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @SuppressLint({"ResourceAsColor", "UseCompatLoadingForColorStateLists"})
+            @Override
+            public void onGenerated(@Nullable Palette palette) {
+                assert palette != null;
+                Palette.Swatch swatch = palette.getDominantSwatch();
+                GradientDrawable gradientDrawable;
+                int color = Color.WHITE; //white
+                if(swatch != null){
+                    int RGB = swatch.getRgb();
+                    int red = Color.red(RGB);
+                    int green = Color.green(RGB);
+                    int blue = Color.blue(RGB);
+                    gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,
+                            new int[] {RGB, RGB});
+                    if(red > 180 && green > 180 && blue > 180){
+                        color = Color.BLACK;//black
+                    }
+                    circleVisualizer.setColor(Color.rgb((128+red)%255, (128+green)%255, (128+blue)%255));
+                }
+                else{
+                    gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,
+                            new int[] {0xff000000, 0xff000000});
+                }
+                durationView.setTextColor(color);
+                totalDurationView.setTextColor(color);
+                nameAuthorView.setTextColor(color);
+                nameSongView.setTextColor(color);
+                playingActivity.setBackground(gradientDrawable);
+                if(color == Color.WHITE)
+                    backButton.setBackgroundResource(R.drawable.ic_baseline_white_arrow_left);
+                else backButton.setBackgroundResource(R.drawable.ic_baseline_black_arrow_left);
+            }
+        });
+
         totalDurationView.setText(songPlaying.getDuration());
         int id = musicService.getAudioSessionId();
         if(id != -1){
@@ -297,15 +305,16 @@ public class PlayingActivity extends AppCompatActivity implements MediaPlayerAct
         }
         if(musicService.isPlaying()){
             animationRotation();
-            playButton.setBackgroundResource(R.drawable.ic_baseline_pause);
+            playButton.setBackgroundResource(R.drawable.ic_baseline_pause_circle_outline_24);
         }
         else{
             playingImageView.animate().cancel();
-            playButton.setBackgroundResource(R.drawable.ic_baseline_play);
+            playButton.setBackgroundResource(R.drawable.ic_baseline_play_circle_outline_24);
         }
     }
 
     private void animationRotation(){
+
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -313,6 +322,7 @@ public class PlayingActivity extends AppCompatActivity implements MediaPlayerAct
                         .setInterpolator(new LinearInterpolator()).start();
             }
         };
+
         playingImageView.animate().rotationBy(360).withEndAction(runnable).setDuration(10000)
                 .setInterpolator(new LinearInterpolator()).start();
     }
@@ -339,8 +349,8 @@ public class PlayingActivity extends AppCompatActivity implements MediaPlayerAct
             circleVisualizer.release();
         }
         setResult(Activity.RESULT_OK);
-        unbindService(serviceConnection);
         finish();
+//        overridePendingTransition(R.anim.slide_from_top,R.anim.slide_in_top);
     }
 
     @Override
@@ -348,12 +358,12 @@ public class PlayingActivity extends AppCompatActivity implements MediaPlayerAct
         if(musicService.isPlaying()){
             playingImageView.animate().cancel();
             musicService.pause();
-            playButton.setBackgroundResource(R.drawable.ic_baseline_play);
+            playButton.setBackgroundResource(R.drawable.ic_baseline_play_circle_outline_24);
         }
         else{
             animationRotation();
             musicService.play();
-            playButton.setBackgroundResource(R.drawable.ic_baseline_pause);
+            playButton.setBackgroundResource(R.drawable.ic_baseline_pause_circle_outline_24);
         }
     }
 
@@ -368,4 +378,30 @@ public class PlayingActivity extends AppCompatActivity implements MediaPlayerAct
         musicService.previousSong();
         setView();
     }
+
+    @SuppressLint("StaticFieldLeak")
+    private class ConnectService extends AsyncTask<Void, Integer, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.R)
+        @Override
+        protected String doInBackground(Void... voids) {
+            musicService = musicBinder.getService();
+            return null;
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.R)
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            setContentView(R.layout.activity_playing);
+            mapping();
+            prepare();
+        }
+    }
+
 }

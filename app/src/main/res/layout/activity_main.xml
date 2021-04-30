@@ -9,27 +9,27 @@
     tools:context=".MainActivity">
 
     <RelativeLayout
-        android:id="@+id/title"
+        android:id="@+id/titleSearch"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:alpha="1">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatarAccount"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/avatar"/>
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/logo_simple_music" />
 
         <SearchView
             android:id="@+id/searchView"
-            android:layout_width="320dp"
-            android:layout_height="30dp"
+            android:layout_width="330dp"
+            android:layout_height="45dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="5dp"
@@ -37,25 +37,28 @@
             app:queryHint="@string/searchHint"
             android:iconifiedByDefault="false"
             android:background="@drawable/background_search"
-            android:layout_marginStart="50dp"/>
+            android:layout_marginStart="55dp"/>
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listViewSongs"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/main_playing"
-        android:queryHint="@string/searchHint"
-        android:layout_below="@+id/title"/>
+        android:layout_below="@+id/titleSearch"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true">
+    </androidx.viewpager.widget.ViewPager>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_playing"
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_marginBottom="0.5dp"
+        android:background="#373737"
         android:visibility="gone">
 
         <ProgressBar
@@ -92,9 +95,9 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:singleLine="true"
             android:text="@string/nameSong"
+            android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_playing_music_icon"
             app:layout_constraintTop_toTopOf="@+id/main_playing_music_icon"
@@ -106,8 +109,8 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:text="@string/nameAuthor"
+            android:textColor="@color/white"
             android:textSize="13sp"
-            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/main_playing_name_song"
             app:layout_constraintTop_toBottomOf="@+id/main_playing_name_song"
@@ -120,7 +123,7 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="0dp"
             android:background="@drawable/ic_baseline_play"
-            app:backgroundTint="@color/av_red"
+            app:backgroundTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_playing_name_song"
             app:layout_constraintTop_toTopOf="@+id/main_playing_name_song"
@@ -132,7 +135,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/ic_baseline_skip_previous"
-            app:backgroundTint="@color/red_light"
+            app:backgroundTint="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/main_play_button"
             app:layout_constraintTop_toTopOf="@+id/main_play_button" />
 
@@ -142,10 +145,25 @@
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/ic_baseline_skip_next"
-            app:backgroundTint="@color/red_light"
+            app:backgroundTint="@color/white"
             app:layout_constraintStart_toEndOf="@+id/main_play_button"
             app:layout_constraintTop_toTopOf="@+id/main_play_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        app:itemBackground="@color/black"
+        app:itemIconTint="@color/select_navigation"
+        app:itemTextColor="@color/select_navigation"
+        app:menu="@menu/bottom_navigation" />
+
+
+
 
 </RelativeLayout>

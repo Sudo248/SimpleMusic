@@ -7,9 +7,9 @@
     android:background="@drawable/background"
     tools:context=".PlayingActivity"
     android:id="@+id/playingActivity">
+
     <RelativeLayout
-        android:id="@+id/title"
-        android:background="@drawable/background_title"
+        android:id="@+id/titlePlaying"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/name_song_playing"
-            android:layout_width="256dp"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="3dp"
@@ -43,28 +43,16 @@
 
         <TextView
             android:id="@+id/name_author_playing"
-            android:layout_width="80dp"
+            android:layout_width="150dp"
             android:singleLine="true"
             android:layout_height="wrap_content"
             android:layout_below="@+id/name_song_playing"
             android:layout_alignStart="@+id/name_song_playing"
-            android:layout_alignLeft="@+id/name_song_playing"
             android:layout_marginStart="1dp"
-            android:layout_marginLeft="1dp"
             android:layout_marginTop="6dp"
             android:textColor="#FFF"
             android:text="@string/nameAuthor" />
 
-        <Button
-
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="0dp"
-            android:background="@drawable/ic_baseline_queue_music"
-            app:backgroundTint="@color/white" />
     </RelativeLayout>
 
     <com.gauravk.audiovisualizer.visualizer.CircleLineVisualizer
@@ -174,51 +162,49 @@
 
         <Button
             android:id="@+id/shuffle"
-            android:onClick="clickShuffleButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/ic_baseline_shuffle_on"
-            app:backgroundTint="@color/red_light" />
+            android:background="@drawable/ic_baseline_shuffle_off"
+            app:backgroundTint="@color/av_red" />
 
         <Button
             android:id="@+id/previous"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/ic_baseline_skip_previous"
-            app:backgroundTint="@android:color/holo_red_light" />
+            app:backgroundTint="@color/av_red" />
 
         <Button
             android:id="@+id/playing_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:background="@drawable/ic_baseline_pause"
+            android:background="@drawable/ic_baseline_pause_circle_outline_24"
             app:backgroundTint="@color/av_red" />
 
         <Button
             android:id="@+id/next"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/ic_baseline_skip_next"
-            app:backgroundTint="@android:color/holo_red_light" />
+            app:backgroundTint="@color/av_red" />
 
         <Button
             android:id="@+id/repeat"
-            android:onClick="clickRepeatButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/ic_baseline_repeat_on"
-            app:backgroundTint="@color/red_light" />
+            android:background="@drawable/ic_baseline_repeat_off"
+            app:backgroundTint="@color/av_red" />
 
     </LinearLayout>
 

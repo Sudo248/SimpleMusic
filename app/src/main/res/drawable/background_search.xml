@@ -6,9 +6,11 @@
         android:width="500dp"
         android:height="50dp"/>
     <stroke
-        android:color="@color/black"
+        android:color="#5F5F5F"
         android:width="2dp"/>
     <corners
         android:radius="25dp"/>
+    <solid
+        android:color="#E8FFFFFF"/>
 
 </shape>

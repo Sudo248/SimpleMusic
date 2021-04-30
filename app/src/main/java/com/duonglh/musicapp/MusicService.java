@@ -39,10 +39,10 @@ public class MusicService extends Service {
     private int IDCurrentSong;
     private boolean isShuffle;
     private ArrayList<Song> listSong;
-    private UpdateView updateView;
+    private MyInterface.UpdateView updateView;
     private final IBinder iBinder = new MusicBinder();
     private MediaSessionCompat mediaSessionCompat;
-    private MediaPlayerAction playerAction;
+    private MyInterface.MediaPlayerAction playerAction;
     PendingIntent contentPending, nextPending, playPausePending, previousPending;
 
 
@@ -51,7 +51,7 @@ public class MusicService extends Service {
         super.onCreate();
         mediaSessionCompat = new MediaSessionCompat(this, "Simple Music");
 
-        Intent intent = new Intent(this, MusicService.class);
+        Intent intent = new Intent(this, PlayingActivity.class);
         contentPending = PendingIntent.getActivity(this, REQUEST_CODE_NOTIFICATION, intent, 0);
 
         Intent preIntent = new Intent(this, MusicReceiver.class).setAction(ACTION_PREVIOUS);
@@ -73,12 +73,13 @@ public class MusicService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(listSong == null) listSong = Mp3File.getInstance().getListSong();
 
         int idCurrentSong = intent.getIntExtra("CurrentSong", -1);
         if(idCurrentSong != -1){
-            create(idCurrentSong);
-            MUSIC.start();
+            if(MUSIC == null ){
+                create(idCurrentSong);
+                MUSIC.start();
+            }
         }
 
         String action = intent.getStringExtra("action");
@@ -95,6 +96,7 @@ public class MusicService extends Service {
                     break;
             }
         }
+
         return START_STICKY;
     }
 
@@ -128,13 +130,11 @@ public class MusicService extends Service {
                 .setOnlyAlertOnce(true)
                 .build();
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        notificationManager.notify(ID_NOTIFICATION, notification);
+        startForeground(ID_NOTIFICATION, notification);
     }
 
 
-    public void setUpdateView(UpdateView updateView){
+    public void setUpdateView(MyInterface.UpdateView updateView){
         this.updateView = updateView;
     }
 
@@ -150,6 +150,7 @@ public class MusicService extends Service {
             MUSIC.stop();
             MUSIC.release();
         }
+        Log.e("Duong",listSong.size()+"");
         MUSIC = MediaPlayer.create(getBaseContext(), Uri.parse(listSong.get(IDCurrentSong).getPath()));
 
         MUSIC.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -233,6 +234,10 @@ public class MusicService extends Service {
         return listSong.get(IDCurrentSong);
     }
 
+    public void updateListSong(){
+        this.listSong = Mp3File.getInstance().getListSong();
+    }
+
     public void removeSong(int position){
         if(position < IDCurrentSong) IDCurrentSong--;
     }
@@ -242,7 +247,9 @@ public class MusicService extends Service {
             return MusicService.this;
         }
     }
-    public void setCallBack(MediaPlayerAction playerAction){
+    public void setCallBack(MyInterface.MediaPlayerAction playerAction){
         this.playerAction = playerAction;
     }
+
 }
+

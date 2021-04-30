@@ -44,7 +44,7 @@
             android:singleLine="true"
             android:text="@string/nameAuthor"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/time"

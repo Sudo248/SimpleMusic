@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 @Database(entities = {Song.class}, version = 1, exportSchema = false)
 
 public abstract class SongDataBase extends RoomDatabase {
-    private static final String DATABASE_NAME = "songs.db";
+    private static final String DATABASE_NAME = "simple_music.db";
     private static SongDataBase INSTANCE;
 
     public static synchronized SongDataBase getInstance(Context context){

@@ -4,12 +4,12 @@
     <shared>
       <config>
         <device id="pixel_3" />
+        <device id="Nexus 5X" />
         <device id="pixel" />
         <device id="pixel_4_xl" />
         <device id="pixel_3a" />
         <device id="Nexus 6P" />
         <device id="pixel_xl" />
-        <device id="Nexus 5X" />
       </config>
     </shared>
   </component>
@@ -44,15 +44,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2e0b4039-8413-4f3f-ae07-0ad4a10efdf7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_media_media_1_3_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MediaPlayerAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MusicReceiver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/UpdateView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_search.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_adjust_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_white_arrow_left.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/xml/searchable.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_annotation_annotation_experimental_1_1_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_asynclayoutinflater_asynclayoutinflater_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_ui_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_v4_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_room_room_common_2_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_slidingpanelayout_slidingpanelayout_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_sqlite_sqlite_framework_2_1_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_swiperefreshlayout_swiperefreshlayout_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jsoup_jsoup_1_10_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/DownloadMusicFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MyInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/PlayListFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/RankFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/SongOnline.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/SongOnlineAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/ViewPagerAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/slide_down.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/slide_from_top.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/slide_in_top.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/slide_in_up.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/slide_out_up.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/slide_up.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/color/select_navigation.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/avatar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_dialog.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_title_dialog.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_check_circle_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_do_not_disturb_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_download_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_download_music_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_ondemand_video_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_pause_circle_outline_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_phone_android_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_play_circle_outline_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_trending_up_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_delete_song.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_notfound_music.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/empty_layout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_download_music.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_play_list.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_rank.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/intro.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/song_online_information.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/menu/bottom_navigation.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/integers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" afterDir="false" />
@@ -69,30 +106,38 @@
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/duonglh.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/duonglh.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_room_room_common_2_2_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_room_room_runtime_2_2_6_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_room_room_runtime_2_3_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_sqlite_sqlite_2_0_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_sqlite_sqlite_2_1_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_sqlite_sqlite_framework_2_0_1_aar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/app/MusicApp.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/MusicApp.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MediaPlayerAction.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MusicService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MusicService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/PlayingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/PlayingActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/UpdateView.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Data/Mp3File.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Data/Mp3File.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/MyNotificationChannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/MyNotificationChannel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/SongAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/SongAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/music_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/music_icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bacground_main_playing.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/Song.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/SongDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/SongDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/SongDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/SongDataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/avatar.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_card.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background_title.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_title.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_arrow_left.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_black_arrow_left.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_pause_circle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_pause_circle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_play_circle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_play_circle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_search.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background_title.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_navigation_bottom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_cancel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_cancel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_repeat.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_repeat_off.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_repeat_on.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_repeat_on.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_shuffle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_shuffle_off.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_shuffle_on.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_shuffle_on.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_star_border_32.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_star_border_32.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_playing.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_playing.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/notification.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/load_data.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/load_data.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/song_information.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/song_information.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-night/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
     </list>
@@ -101,7 +146,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[a7fa5d1]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -125,11 +170,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="layoutResourceFile" />
         <option value="Interface" />
         <option value="Class" />
         <option value="valueResourceFile" />
         <option value="resourceFile" />
+        <option value="layoutResourceFile" />
       </list>
     </option>
   </component>
@@ -146,7 +191,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="MyPhone" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-04-25T05:48:48.974Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-04-29T16:37:50.324Z" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -155,29 +200,31 @@
     <property name="android-custom-view/home/duonglh/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.1.0/f2bdf79e1977939817f54a9d3e2f6bc52b63bdd0/recyclerview-1.1.0-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_SELECTED" value="RecyclerView" />
     <property name="android-custom-view/home/duonglh/.gradle/caches/modules-2/files-2.1/com.gauravk.audiovisualizer/audiovisualizer/0.9.2/1c529e3fc652256afc7a94acfa844cc8f79ca4e7/audiovisualizer-0.9.2-sources.jar!/com/gauravk/audiovisualizer/base/BaseVisualizer.java_SELECTED" value="BaseVisualizer" />
     <property name="android-custom-view/home/duonglh/Android/Sdk/sources/android-30/android/view/View.java_SELECTED" value="View" />
+    <property name="android-custom-view/home/duonglh/Android/Sdk/sources/android-30/android/widget/ProgressBar.java_SELECTED" value="ProgressBar" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PracticeService" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable" />
     <property name="multi-representation-preview/home/duonglh/.gradle/caches/modules-2/files-2.1/androidx.appcompat/appcompat/1.2.0/13e8ff89631c2e101eb6bddd12c2fb4bbd74b15d/appcompat-1.2.0-sources.jar!/androidx/appcompat/widget/SearchView.java_selected" value="Custom views" />
     <property name="multi-representation-preview/home/duonglh/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.1.0/f2bdf79e1977939817f54a9d3e2f6bc52b63bdd0/recyclerview-1.1.0-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_selected" value="Custom views" />
     <property name="multi-representation-preview/home/duonglh/.gradle/caches/modules-2/files-2.1/com.gauravk.audiovisualizer/audiovisualizer/0.9.2/1c529e3fc652256afc7a94acfa844cc8f79ca4e7/audiovisualizer-0.9.2-sources.jar!/com/gauravk/audiovisualizer/base/BaseVisualizer.java_selected" value="Custom views" />
     <property name="multi-representation-preview/home/duonglh/Android/Sdk/sources/android-30/android/view/View.java_selected" value="Custom views" />
+    <property name="multi-representation-preview/home/duonglh/Android/Sdk/sources/android-30/android/widget/ProgressBar.java_selected" value="Custom views" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout-v21" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.duonglh.musicapp" />
       <recent name="com.duonglh.musicapp.model" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
-      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
-      <recent name="$PROJECT_DIR$/app/src/main/res/layout-v21" />
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
@@ -322,82 +369,82 @@
     <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="397" y="226" width="1188" height="662" key="#PSD" timestamp="1617536820520">
+    <state x="397" y="226" width="1188" height="662" key="#PSD" timestamp="1619692772168">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="397" y="226" width="1188" height="662" key="#PSD/72.27.1848.1053@72.27.1848.1053" timestamp="1617536820520" />
+    <state x="397" y="226" width="1188" height="662" key="#PSD/72.27.1848.1053@72.27.1848.1053" timestamp="1619692772168" />
     <state x="454" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1617296322925">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="454" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1617296322925" />
-    <state x="757" y="165" width="468" height="784" key="#com.intellij.ide.util.MemberChooser" timestamp="1619438038873">
+    <state x="1019" y="173" width="468" height="784" key="#com.intellij.ide.util.MemberChooser" timestamp="1619745249337">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="757" y="165" width="468" height="784" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1619438038873" />
+    <state x="1019" y="173" width="468" height="784" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1619745249337" />
     <state x="703" y="400" width="585" height="325" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1618896645880">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="703" y="400" width="585" height="325" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/72.27.1848.1053@72.27.1848.1053" timestamp="1618896645880" />
-    <state x="72" y="27" width="1838" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1619286161928">
+    <state x="72" y="27" width="1838" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1619730750469">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="72" y="27" width="1838" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619286161928" />
-    <state x="663" y="242" width="655" height="629" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1619500452908">
+    <state x="72" y="27" width="1838" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619730750469" />
+    <state x="663" y="242" width="655" height="629" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1619731515619">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="663" y="242" width="655" height="629" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619500452908" />
-    <state x="172" y="127" width="1648" height="853" key="AVDManager" timestamp="1619452439774">
+    <state x="663" y="242" width="655" height="629" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619731515619" />
+    <state x="172" y="127" width="1648" height="853" key="AVDManager" timestamp="1619595100358">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="172" y="127" width="1648" height="853" key="AVDManager/72.27.1848.1053@72.27.1848.1053" timestamp="1619452439774" />
+    <state x="172" y="127" width="1648" height="853" key="AVDManager/72.27.1848.1053@72.27.1848.1053" timestamp="1619595100358" />
     <state x="576" y="304" width="830" height="505" key="AndroidCreateResourceDirectoryDialog" timestamp="1617636012379">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="576" y="304" width="830" height="505" key="AndroidCreateResourceDirectoryDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1617636012379" />
-    <state x="576" y="304" width="830" height="505" key="AndroidCreateResourceFileDialog" timestamp="1619503099922">
+    <state x="576" y="304" width="830" height="505" key="AndroidCreateResourceFileDialog" timestamp="1619732489685">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="576" y="304" width="830" height="505" key="AndroidCreateResourceFileDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619503099922" />
-    <state x="781" y="301" width="456" height="512" key="AndroidCreateXmlResourceDialog" timestamp="1619503135397">
+    <state x="576" y="304" width="830" height="505" key="AndroidCreateResourceFileDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619732489685" />
+    <state x="781" y="301" width="456" height="512" key="AndroidCreateXmlResourceDialog" timestamp="1619693618667">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="781" y="301" width="456" height="512" key="AndroidCreateXmlResourceDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619503135397" />
-    <state x="774" y="314" width="881" height="491" key="FileChooserDialogImpl" timestamp="1619509633134">
+    <state x="781" y="301" width="456" height="512" key="AndroidCreateXmlResourceDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619693618667" />
+    <state x="774" y="314" width="881" height="491" key="FileChooserDialogImpl" timestamp="1619697693177">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="774" y="314" width="881" height="491" key="FileChooserDialogImpl/72.27.1848.1053@72.27.1848.1053" timestamp="1619509633134" />
-    <state width="1791" height="457" key="GridCell.Tab.0.bottom" timestamp="1619507218408">
+    <state x="774" y="314" width="881" height="491" key="FileChooserDialogImpl/72.27.1848.1053@72.27.1848.1053" timestamp="1619697693177" />
+    <state width="1791" height="313" key="GridCell.Tab.0.bottom" timestamp="1619745983952">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="457" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1619507218408" />
-    <state width="1791" height="457" key="GridCell.Tab.0.center" timestamp="1619507218408">
+    <state width="1791" height="313" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1619745983952" />
+    <state width="1791" height="313" key="GridCell.Tab.0.center" timestamp="1619745983949">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="457" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1619507218408" />
-    <state width="1791" height="457" key="GridCell.Tab.0.left" timestamp="1619507218407">
+    <state width="1791" height="313" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1619745983949" />
+    <state width="1791" height="313" key="GridCell.Tab.0.left" timestamp="1619745983948">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="457" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1619507218407" />
-    <state width="1791" height="457" key="GridCell.Tab.0.right" timestamp="1619507218408">
+    <state width="1791" height="313" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1619745983948" />
+    <state width="1791" height="313" key="GridCell.Tab.0.right" timestamp="1619745983951">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="457" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1619507218408" />
-    <state width="1791" height="402" key="GridCell.Tab.1.bottom" timestamp="1619432143405">
+    <state width="1791" height="313" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1619745983951" />
+    <state width="1791" height="497" key="GridCell.Tab.1.bottom" timestamp="1619733225701">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="402" key="GridCell.Tab.1.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1619432143405" />
-    <state width="1791" height="402" key="GridCell.Tab.1.center" timestamp="1619432143404">
+    <state width="1791" height="497" key="GridCell.Tab.1.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1619733225701" />
+    <state width="1791" height="497" key="GridCell.Tab.1.center" timestamp="1619733225701">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="402" key="GridCell.Tab.1.center/72.27.1848.1053@72.27.1848.1053" timestamp="1619432143404" />
-    <state width="1791" height="402" key="GridCell.Tab.1.left" timestamp="1619432143404">
+    <state width="1791" height="497" key="GridCell.Tab.1.center/72.27.1848.1053@72.27.1848.1053" timestamp="1619733225701" />
+    <state width="1791" height="497" key="GridCell.Tab.1.left" timestamp="1619733225701">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="402" key="GridCell.Tab.1.left/72.27.1848.1053@72.27.1848.1053" timestamp="1619432143404" />
-    <state width="1791" height="402" key="GridCell.Tab.1.right" timestamp="1619432143404">
+    <state width="1791" height="497" key="GridCell.Tab.1.left/72.27.1848.1053@72.27.1848.1053" timestamp="1619733225701" />
+    <state width="1791" height="497" key="GridCell.Tab.1.right" timestamp="1619733225701">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="402" key="GridCell.Tab.1.right/72.27.1848.1053@72.27.1848.1053" timestamp="1619432143404" />
+    <state width="1791" height="497" key="GridCell.Tab.1.right/72.27.1848.1053@72.27.1848.1053" timestamp="1619733225701" />
     <state x="476" y="239" width="1030" height="635" key="IDE.errors.dialog" timestamp="1617614504094">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
@@ -411,10 +458,10 @@
     </state>
     <state x="492" y="27" width="1350" height="1053" key="SettingsEditor/72.27.1848.1053@72.27.1848.1053" timestamp="1619422074506" />
     <state x="492" y="192" width="1007" height="737" key="SettingsEditor/72.34.1848.1046@72.34.1848.1046" timestamp="1617793418024" />
-    <state x="720" y="321" width="542" height="472" key="chooseDestDirectoryDialog" timestamp="1618905559315">
+    <state x="720" y="321" width="542" height="472" key="chooseDestDirectoryDialog" timestamp="1619731481786">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="720" y="321" width="542" height="472" key="chooseDestDirectoryDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1618905559315" />
+    <state x="720" y="321" width="542" height="472" key="chooseDestDirectoryDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619731481786" />
     <state x="172" y="127" width="1648" height="853" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1619371828366">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
@@ -431,13 +478,34 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="794" y="117" width="1080" height="848" key="org.intellij.images.editor.actions.BackgroundImageDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1618581854059" />
-    <state x="576" y="248" key="run.anything.popup" timestamp="1617790423009">
+    <state x="576" y="248" key="run.anything.popup" timestamp="1619726137061">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="576" y="248" key="run.anything.popup/72.27.1848.1053@72.27.1848.1053" timestamp="1617790423009" />
-    <state x="575" y="44" width="840" height="1034" key="search.everywhere.popup" timestamp="1619438204162">
+    <state x="576" y="248" key="run.anything.popup/72.27.1848.1053@72.27.1848.1053" timestamp="1619726137061" />
+    <state x="575" y="44" width="840" height="1034" key="search.everywhere.popup" timestamp="1619729376726">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="575" y="44" width="840" height="1034" key="search.everywhere.popup/72.27.1848.1053@72.27.1848.1053" timestamp="1619438204162" />
+    <state x="575" y="44" width="840" height="1034" key="search.everywhere.popup/72.27.1848.1053@72.27.1848.1053" timestamp="1619729376726" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/DownloadMusicFragment.java</url>
+          <line>336</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Data/Mp3File.java</url>
+          <line>84</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Data/Mp3File.java</url>
+          <line>99</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
