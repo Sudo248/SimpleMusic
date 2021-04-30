@@ -12,8 +12,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private final PlayListFragment playListFragment = new PlayListFragment();
     private final DownloadMusicFragment downloadMusicFragment = new DownloadMusicFragment();
     private final RankFragment rankFragment = new RankFragment();
-    private int currentFragment = 0, newFragment = 0;
-
 
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -38,10 +36,4 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         return 3;
     }
 
-    public int getCurrentFragment(){
-        if(newFragment > currentFragment) currentFragment = newFragment - 1;
-        else if(currentFragment < newFragment) currentFragment = newFragment + 1;
-        Log.e("Fragment","new Fragment: "+newFragment+" Current Fragment: "+currentFragment);
-        return currentFragment;
-    }
 }

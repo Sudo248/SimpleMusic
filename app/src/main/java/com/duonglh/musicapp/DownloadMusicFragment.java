@@ -27,9 +27,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duonglh.musicapp.model.Data.Mp3File;
@@ -78,9 +77,7 @@ public class DownloadMusicFragment extends Fragment implements MyInterface.Respo
     private SongOnlineAdapter songOnlineAdapter;
     private SongOnline songDownload;
     private ProgressBar loadSongOnline;
-    private static List<SongOnline> oldListSongOnline;
-
-
+    private LinearLayout iconGroup;
 
     public DownloadMusicFragment() {
         // Required empty public constructor
@@ -125,6 +122,7 @@ public class DownloadMusicFragment extends Fragment implements MyInterface.Respo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment;
+        Log.e("Duong", "onCreateView");
          mainView = inflater.inflate(R.layout.fragment_download_music, container, false);
         return mainView;
     }
@@ -132,24 +130,39 @@ public class DownloadMusicFragment extends Fragment implements MyInterface.Respo
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.e("Duong", "onActivityCreated");
         mapping();
         prepareUI();
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+        Log.e("Duong", "onResume");
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("Duong", "onPause");
+        if(listSongOnline != null ) {
+            listSongOnline.clear();
+            songOnlineAdapter.notifyDataSetChanged();
+            iconGroup.setVisibility(View.VISIBLE);
+        }
     }
 
     private void mapping(){
-        searchButton = mainView.findViewById(R.id.searchOnlineButton);
-        downloadBar = mainView.findViewById(R.id.downloadBar);
-        recyclerView = mainView.findViewById(R.id.rev_songOnline);
-        loadSongOnline = mainView.findViewById(R.id.loadSongOnline);
+        searchButton    = mainView.findViewById(R.id.searchOnlineButton);
+        downloadBar     = mainView.findViewById(R.id.downloadBar);
+        recyclerView    = mainView.findViewById(R.id.rev_songOnline);
+        loadSongOnline  = mainView.findViewById(R.id.loadSongOnline);
+        iconGroup       = mainView.findViewById(R.id.icon_group);
     }
 
     private void prepareUI(){
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,18 +178,28 @@ public class DownloadMusicFragment extends Fragment implements MyInterface.Respo
         });
 
         songOnlineAdapter = new SongOnlineAdapter(mainContext, new SongOnlineAdapter.Download() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void start(int position) {
                 songDownload = listSongOnline.get(position);
                 downloadBar.setVisibility(View.VISIBLE);
                 downloadBar.setProgress(0);
-                new Download(DownloadMusicFragment.this).execute();
+                if(Mp3File.getInstance().noSong(songDownload.getNameSong(), songDownload.getNameAuthor())){
+                    new Download(DownloadMusicFragment.this).execute();
+                }
+                else{
+                    Toast.makeText(mainContext, "Bài hát này đã có trong danh sách nhạc.",Toast.LENGTH_LONG).show();
+                }
             }
         });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainContext, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
+
         if(listSongOnline != null && !listSongOnline.isEmpty()){
             displaySongOnline();
+        }
+        else{
+            iconGroup.setVisibility(View.VISIBLE);
         }
     }
 
@@ -191,9 +214,11 @@ public class DownloadMusicFragment extends Fragment implements MyInterface.Respo
         @Override
         protected void onPreExecute() {
             listSongOnline = new ArrayList<>();
+            iconGroup.setVisibility(View.GONE);
             loadSongOnline.setVisibility(View.VISIBLE);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         protected String doInBackground(String... strings) {
             try {
@@ -218,7 +243,9 @@ public class DownloadMusicFragment extends Fragment implements MyInterface.Respo
                     try {
                         URL url = new URL(urlImage);
                         Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                        listSongOnline.add(new SongOnline(nameSong, nameAuthor, image, urlSong));
+                        if(Mp3File.getInstance().noSong(nameSong, nameAuthor))
+                            listSongOnline.add(new SongOnline(nameSong, nameAuthor, image, urlSong,false));
+                        else listSongOnline.add(new SongOnline(nameSong, nameAuthor, image, urlSong,true));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -238,7 +265,7 @@ public class DownloadMusicFragment extends Fragment implements MyInterface.Respo
                 displaySongOnline();
             }
             else{
-                showDialog(Gravity.CENTER_VERTICAL);
+                showNotFoundDialog(Gravity.CENTER_VERTICAL);
             }
         }
     }
@@ -256,7 +283,6 @@ public class DownloadMusicFragment extends Fragment implements MyInterface.Respo
         private byte[] image = new byte[1024];
         int total = 0;
         int lenghtOfFile;
-
         @Override
         protected String doInBackground(String... strings) {
             new Thread(new Runnable() {
@@ -326,9 +352,12 @@ public class DownloadMusicFragment extends Fragment implements MyInterface.Respo
             Mp3File.getInstance().addSong(song);
             SongDataBase.getInstance(getContext()).songDAO().insertSong(song);
             mainActivity.updateListSongService();
-            Toast.makeText(getContext(), "Download success", Toast.LENGTH_LONG).show();
-            songDownload = null;
             downloadBar.setVisibility(View.INVISIBLE);
+            songDownload.setDownloaded(true);
+            mainActivity.setDownloaded(true);
+            songOnlineAdapter.notifyDataSetChanged();
+            songDownload = null;
+            Toast.makeText(getContext(), "Download success", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -348,7 +377,7 @@ public class DownloadMusicFragment extends Fragment implements MyInterface.Respo
     }
 
     @SuppressLint("SetTextI18n")
-    private void showDialog(int gravity){
+    private void showNotFoundDialog(int gravity){
         final Dialog dialog = new Dialog(mainContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_notfound_music);
@@ -380,6 +409,5 @@ public class DownloadMusicFragment extends Fragment implements MyInterface.Respo
         dialog.show();
 
     }
-
 
 }

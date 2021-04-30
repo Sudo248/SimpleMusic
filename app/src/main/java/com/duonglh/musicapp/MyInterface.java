@@ -28,6 +28,6 @@ public class MyInterface {
     }
 
     public interface onKeyDown {
-        boolean press(int keyCode, KeyEvent keyEvent);
+        boolean press();
     }
 }

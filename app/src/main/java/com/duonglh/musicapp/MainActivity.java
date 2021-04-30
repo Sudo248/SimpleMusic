@@ -2,12 +2,15 @@ package com.duonglh.musicapp;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,11 +18,16 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -41,6 +49,7 @@ import com.duonglh.musicapp.model.Song.SongDataBase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
+import java.security.Key;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
     private ConstraintLayout mainPlaying;
     private MusicService musicService;
     private MyInterface.UpdateView updateView;
-    private boolean isBoundService, once = false;
+    private boolean isBoundService, once = false, isDownloaded = false;
     private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
     private MyInterface.ResponseSearch responseSearch;
     private MyInterface.onKeyDown onKeyDown;
@@ -83,25 +92,26 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Intent stopService = new Intent(this, MusicService.class);
+        stopService(stopService);
     }
 
     @Override
     public void onBackPressed() {
-        if (!searchView.getQuery().equals("")) {
+        if(currentFragment == 2){
+            if (!onKeyDown.press()) {
+                viewPager.setCurrentItem(0);
+            }
+            return;
+        }
+        else if (!searchView.getQuery().toString().equals("")) {
             searchView.setQuery("",false);
             searchView.clearFocus();
             searchView.setIconified(true);
             return;
         }
-        super.onBackPressed();
+        moveTaskToBack(true);
     }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(event != null && onKeyDown != null) onKeyDown.press(keyCode, event);
-        return super.onKeyDown(keyCode, event);
-    }
-
 
     private final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
@@ -350,7 +360,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
         protected String doInBackground(Void... voids) {
             Mp3File.getInstance().loadAllData(MainActivity.this);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -377,6 +387,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
                     mainPlaying.setVisibility(View.VISIBLE);
                 }
             } else {
+                showNoSongDialog(Gravity.CENTER_VERTICAL);
                 Toast.makeText(MainActivity.this, "NO  MUSIC", Toast.LENGTH_LONG).show();
             }
             prepareUI();
@@ -392,6 +403,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
     }
 
     private void setUpViewPager(){
+
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPagerAdapter);
 
@@ -434,6 +446,41 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
 
     }
 
+    @SuppressLint("SetTextI18n")
+    private void showNoSongDialog(int gravity){
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_no_song);
+
+        Window window = dialog.getWindow();
+        if(window == null) return;
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        if(gravity == Gravity.CENTER_VERTICAL ){
+            dialog.setCancelable(true);
+        }
+        else{
+            dialog.setCancelable(false);
+        }
+
+        ImageButton directDownloadButton = dialog.findViewById(R.id.directDownloadButton);
+
+        directDownloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                directToDownloadFragment();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
     public void hideKeyBoard(){
         if (!searchView.getQuery().equals("")) {
             searchView.setQuery("",false);
@@ -461,4 +508,15 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
         musicService.removeSong(position);
     }
 
+    public void directToDownloadFragment(){
+        viewPager.setCurrentItem(1);
+    }
+
+    public boolean isDownloaded() {
+        return isDownloaded;
+    }
+
+    public void setDownloaded(boolean downloaded) {
+        isDownloaded = downloaded;
+    }
 }

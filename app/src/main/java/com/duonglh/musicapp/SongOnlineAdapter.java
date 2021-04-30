@@ -46,12 +46,17 @@ public class SongOnlineAdapter extends RecyclerView.Adapter<SongOnlineAdapter.So
         holder.imageViewSongOnline.setImageBitmap(songOnline.getImage());
         holder.textViewNameSongOnline.setText(songOnline.getNameSong());
         holder.textViewNameAuthorOnline.setText(songOnline.getNameAuthor());
+        if(songOnline.isDownloaded()){
+            holder.imageViewDownload.setImageResource(R.drawable.ic_baseline_download_done_24);
+        }
+
         holder.imageViewDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 download.start(position);
             }
         });
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

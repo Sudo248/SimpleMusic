@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
@@ -33,6 +34,7 @@ public class RankFragment extends Fragment implements MyInterface.ResponseSearch
     private WebView webView;
     private View mainView;
     private MainActivity mainActivity;
+    private RelativeLayout loadWed;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -97,7 +99,6 @@ public class RankFragment extends Fragment implements MyInterface.ResponseSearch
         webView.setWebViewClient(new MyClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("https://youtube.com");
-
     }
 
     @Override
@@ -119,13 +120,11 @@ public class RankFragment extends Fragment implements MyInterface.ResponseSearch
             // TODO Auto-generated method stub
             view.loadUrl(url);
             return true;
-
         }
         @Override
-        public void onReceivedError(WebView view, int errorCode,
-                                    String description, String failingUrl) {
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             // TODO Auto-generated method stub
-            Toast.makeText(getContext(), "Ôi Hỏng" + description, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "Ôi Hỏng" + description, Toast.LENGTH_SHORT).show();
         }
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -135,10 +134,11 @@ public class RankFragment extends Fragment implements MyInterface.ResponseSearch
     }
 
     @Override
-    public boolean press(int keyCode, KeyEvent keyEvent) {
-        if((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
+    public boolean press() {
+        if(webView.canGoBack()) {
             webView.goBack();
+            return true;
         }
-        return true;
+        return false;
     }
 }

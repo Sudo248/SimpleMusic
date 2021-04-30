@@ -3,19 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/background_dialog"
     android:layout_margin="15dp">
 
     <TextView
         android:id="@+id/titleDialog"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_title_dialog"
-
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textStyle="bold"
         tools:text="Delete Chi muon ben em luc nay" />
 
@@ -23,10 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="59dp"
         android:layout_below="@+id/titleDialog"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="-1dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="92dp"
         android:text="@string/describe"
@@ -37,11 +35,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/titleDialog"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="58dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="56dp"
         android:text="@string/notice"
         android:textAlignment="center"
         android:textColor="@color/av_red"
@@ -51,10 +47,10 @@
         android:id="@+id/agreeButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_below="@+id/titleDialog"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="253dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="251dp"
         android:background="@drawable/ic_baseline_check_circle_24"
         android:text="YES"
         android:textColor="@color/white" />
@@ -63,10 +59,9 @@
         android:id="@+id/cancelButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_alignTop="@+id/agreeButton"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginEnd="62dp"
-        android:layout_marginBottom="15dp"
         android:background="@drawable/ic_baseline_cancel" />
 
 

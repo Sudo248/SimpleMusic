@@ -101,7 +101,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
                     for(int i=0; i < listSongsOld.size(); i++){
                         if(listSongsOld.get(i).getId() == id){
                             isOnClickItem.onClickItem(i);
-                            break;
+                            return;
                         }
                     }
                 }

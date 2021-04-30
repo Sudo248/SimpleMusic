@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +43,7 @@ public class PlayListFragment extends Fragment implements MyInterface.ResponseSe
     private static final String ARG_PARAM2 = "param2";
     private RecyclerView recyclerView;
     private SongAdapter songAdapter;
-    private View globalView;
+    private View mainView;
     private Context mainContext;
     private MainActivity mainActivity;
 
@@ -95,8 +94,8 @@ public class PlayListFragment extends Fragment implements MyInterface.ResponseSe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        globalView = inflater.inflate(R.layout.fragment_play_list, container, false);
-        return globalView;
+        mainView = inflater.inflate(R.layout.fragment_play_list, container, false);
+        return mainView;
     }
 
     @Override
@@ -109,12 +108,16 @@ public class PlayListFragment extends Fragment implements MyInterface.ResponseSe
     @Override
     public void onResume() {
         super.onResume();
-        if(songAdapter!=null){
-            songAdapter.setData(mainContext, Mp3File.getInstance().getListSong());
-            songAdapter.notifyDataSetChanged();
-        }
-        if(mainActivity != null){
-            mainActivity.hideKeyBoard();
+        if(mainActivity.isDownloaded()){
+            if(songAdapter!=null){
+                songAdapter.setData(mainContext, Mp3File.getInstance().getListSong());
+                songAdapter.notifyDataSetChanged();
+            }
+            if(mainActivity != null){
+                mainActivity.hideKeyBoard();
+            }
+            assert mainActivity != null;
+            mainActivity.setDownloaded(false);
         }
     }
 
@@ -124,7 +127,7 @@ public class PlayListFragment extends Fragment implements MyInterface.ResponseSe
     }
 
     private void mapping() {
-        recyclerView = globalView.findViewById(R.id.listViewSongs);
+        recyclerView = mainView.findViewById(R.id.listViewSongs);
     }
 
     private void displayListSongs() {
@@ -154,7 +157,7 @@ public class PlayListFragment extends Fragment implements MyInterface.ResponseSe
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                showDialog(Gravity.CENTER_VERTICAL, position);
+                showDeleteSongDialog(Gravity.CENTER_VERTICAL, position);
             }
         });
 
@@ -170,7 +173,7 @@ public class PlayListFragment extends Fragment implements MyInterface.ResponseSe
     }
 
     @SuppressLint("SetTextI18n")
-    private void showDialog(int gravity, int position){
+    private void showDeleteSongDialog(int gravity, int position){
         final Dialog dialog = new Dialog(mainContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_delete_song);
@@ -214,6 +217,7 @@ public class PlayListFragment extends Fragment implements MyInterface.ResponseSe
         dialog.show();
 
     }
+
 
     private void deleteSong(int position){
         Song song = Mp3File.getInstance().getListSong().get(position);

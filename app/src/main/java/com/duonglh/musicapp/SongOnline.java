@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 public class SongOnline {
     private String nameAuthor, nameSong, urlSong;
     private Bitmap image;
-    public SongOnline(String nameSong, String nameAuthor,  Bitmap image, String urlSong) {
+    private boolean isDownloaded;
+    public SongOnline(String nameSong, String nameAuthor,  Bitmap image, String urlSong, boolean isDownloaded) {
         this.nameAuthor = nameAuthor;
         this.nameSong = nameSong;
         this.image = image;
         this.urlSong = urlSong;
+        this.isDownloaded = isDownloaded;
     }
 
     public String getNameAuthor() {
@@ -42,5 +44,13 @@ public class SongOnline {
 
     public void setUrlSong(String urlSong) {
         this.urlSong = urlSong;
+    }
+
+    public boolean isDownloaded() {
+        return isDownloaded;
+    }
+
+    public void setDownloaded(boolean downloaded) {
+        isDownloaded = downloaded;
     }
 }
