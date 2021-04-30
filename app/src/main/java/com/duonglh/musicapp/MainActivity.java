@@ -408,16 +408,19 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
                         bottomNavigationView.getMenu().findItem(R.id.device).setChecked(true);
                         titleSearch.setVisibility(View.VISIBLE);
                         if(once) mainPlaying.setVisibility(View.VISIBLE);
+                        bottomNavigationView.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         bottomNavigationView.getMenu().findItem(R.id.download).setChecked(true);
                         titleSearch.setVisibility(View.VISIBLE);
                         if(once) mainPlaying.setVisibility(View.VISIBLE);
+                        bottomNavigationView.setVisibility(View.VISIBLE);
                         break;
                     case 2:
                         bottomNavigationView.getMenu().findItem(R.id.rank).setChecked(true);
                         titleSearch.setVisibility(View.GONE);
                         mainPlaying.setVisibility(View.GONE);
+                        bottomNavigationView.setVisibility(View.GONE);
                         break;
                 }
             }
