@@ -48,8 +48,12 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MusicService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MusicService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,8 +104,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="MyPhone" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-04-30T01:55:22.301Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="a7fa5d1" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-04-30T02:11:48.826Z" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -323,22 +327,22 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="774" y="314" width="881" height="491" key="FileChooserDialogImpl/72.27.1848.1053@72.27.1848.1053" timestamp="1619697693177" />
-    <state width="1791" height="313" key="GridCell.Tab.0.bottom" timestamp="1619745983952">
+    <state width="1791" height="313" key="GridCell.Tab.0.bottom" timestamp="1619749018221">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="313" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1619745983952" />
-    <state width="1791" height="313" key="GridCell.Tab.0.center" timestamp="1619745983949">
+    <state width="1791" height="313" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1619749018221" />
+    <state width="1791" height="313" key="GridCell.Tab.0.center" timestamp="1619749018221">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="313" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1619745983949" />
-    <state width="1791" height="313" key="GridCell.Tab.0.left" timestamp="1619745983948">
+    <state width="1791" height="313" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1619749018221" />
+    <state width="1791" height="313" key="GridCell.Tab.0.left" timestamp="1619749018220">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="313" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1619745983948" />
-    <state width="1791" height="313" key="GridCell.Tab.0.right" timestamp="1619745983951">
+    <state width="1791" height="313" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1619749018220" />
+    <state width="1791" height="313" key="GridCell.Tab.0.right" timestamp="1619749018221">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="313" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1619745983951" />
+    <state width="1791" height="313" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1619749018221" />
     <state width="1791" height="497" key="GridCell.Tab.1.bottom" timestamp="1619733225701">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>

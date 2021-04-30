@@ -83,8 +83,6 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Intent intent = new Intent(this, MusicService.class);
-        stopService(intent);
     }
 
     @Override
@@ -100,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(event != null) onKeyDown.press(keyCode, event);
+        if(event != null && onKeyDown != null) onKeyDown.press(keyCode, event);
         return super.onKeyDown(keyCode, event);
     }
 
@@ -375,6 +373,9 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
             if (!Mp3File.getInstance().getListSong().isEmpty()) {
                 musicService.setUpdateView(updateView);
                 musicService.setCallBack(MainActivity.this);
+                if(musicService.isPlaying()){
+                    mainPlaying.setVisibility(View.VISIBLE);
+                }
             } else {
                 Toast.makeText(MainActivity.this, "NO  MUSIC", Toast.LENGTH_LONG).show();
             }

@@ -223,7 +223,8 @@ public class MusicService extends Service {
     }
 
     public boolean isPlaying() {
-        return MUSIC.isPlaying();
+        if(MUSIC != null) return MUSIC.isPlaying();
+        return false;
     }
 
     public boolean isLooping() {
