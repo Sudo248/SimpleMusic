@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +32,7 @@ import com.duonglh.musicapp.model.Data.Mp3File;
 import com.duonglh.musicapp.model.Song.Song;
 import com.duonglh.musicapp.model.Song.SongAdapter;
 import com.duonglh.musicapp.model.Song.SongDataBase;
+import com.duonglh.musicapp.viewmodels.PlayListViewModel;
 
 import java.io.File;
 import java.util.List;
@@ -44,11 +47,12 @@ public class PlayListFragment extends Fragment implements Interface.ResponseSear
     private SongAdapter songAdapter;
     private View mainView;
     private MainActivity mainActivity;
-
+    private PlayListViewModel model;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainActivity = (MainActivity) getActivity();
+        model = new ViewModelProvider(this).get(PlayListViewModel.class);
         //Ham nay se chay dc dau tien va nen khoi tao nhung gia tri lien quan den bien quan trong cua fragment
     }
 
@@ -109,8 +113,17 @@ public class PlayListFragment extends Fragment implements Interface.ResponseSear
             }
         });
 
-        List<Song> listSongs = Mp3File.getInstance().getListSong();
-        songAdapter.setData(getContext(),listSongs);
+       // List<Song> listSongs = Mp3File.getInstance().getListSong();
+
+        final Observer<List<Song>> songObserver = new Observer<List<Song>>() {
+            @Override
+            public void onChanged(List<Song> songs) {
+                songAdapter.setData(getContext(),songs);
+            }
+        };
+
+        model.getCurrentListSong().observe(this, songObserver);
+       // songAdapter.setData(getContext(),listSongs);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
