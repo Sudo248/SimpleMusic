@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -17,6 +18,7 @@ import com.duonglh.musicapp.model.Song.SongDataBase;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Mp3File {
@@ -24,8 +26,7 @@ public class Mp3File {
     @SuppressLint("StaticFieldLeak")
     private static Mp3File MP3INSTANCE = null;
     private Context context;
-    private ArrayList<Song> listSong;
-
+    private List<Song> listSong;
 
     public Mp3File(){
         listSong = new ArrayList<>();
@@ -43,13 +44,15 @@ public class Mp3File {
     public void loadAllData(Context context) {
         this.context = context;
         // get From DataBase
-        listSong = (ArrayList<Song>) SongDataBase.getInstance(context).songDAO().getListSongs();
+        listSong = SongDataBase.getInstance(context).songDAO().getListSongs();
 
 //        getFromMediaAudio();
 
         getFromOtherLocation(Environment.getExternalStorageDirectory());
 
-        listSong = (ArrayList<Song>) listSong.stream().sorted(Comparator.comparing(Song::getNameSong)).collect(Collectors.toList());
+        listSong = listSong.stream().sorted
+                (Comparator.comparing(Song::isFavorite).reversed().thenComparing(Song::getNameSong))
+                .collect(Collectors.toList());
 
     }
 
@@ -57,9 +60,9 @@ public class Mp3File {
     private void getFromMediaAudio() {
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         final String[] project = {
-                MediaStore.Audio.Media.TITLE,    // nameSong
+                MediaStore.Audio.Media.TITLE,   // nameSong
+                MediaStore.Audio.Media.ARTIST,  // namAuthor
                 MediaStore.Audio.Media.DATA,     // path
-                MediaStore.Audio.Media.ARTIST,   // namAuthor
                 MediaStore.Audio.Media.DURATION  // time
         };
         @SuppressLint("Recycle")
@@ -67,10 +70,10 @@ public class Mp3File {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 String nameSong = cursor.getString(0);
-                if(noSong(nameSong)) {
-                    String path = cursor.getString(1);
+                String nameAuthor = cursor.getString(1);
+                if(noSong(nameSong, nameAuthor)) {
+                    String path = cursor.getString(2);
                     byte[] image = null;//getImageSong(path);
-                    String nameAuthor = cursor.getString(2);
                     String duration = cursor.getString(3);
                     Song song = new Song(path, image, nameSong, nameAuthor, duration);
                     listSong.add(song);
@@ -96,8 +99,11 @@ public class Mp3File {
                         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
                         retriever.setDataSource(path);
                         String nameSong = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-                        if(noSong(nameSong)) {
-                            String nameAuthor = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                        if(nameSong == null){
+                            nameSong = path.substring(path.lastIndexOf("/")+1, path.length()-4);
+                        }
+                        String nameAuthor = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                        if(noSong(nameSong, nameAuthor)) {
                             byte[] image = retriever.getEmbeddedPicture();
                             String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
                             Song song = new Song(path, image, nameSong, nameAuthor, duration);
@@ -111,34 +117,35 @@ public class Mp3File {
         }
     }
 
-    private boolean noSong(String nameSong){
-
-        for(int i=0;i<listSong.size();i++){
-            if(listSong.get(i).getNameSong().equals(nameSong)){
-                return false;
-            }
-        }
-        return true;
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public boolean noSong(String nameSong, String nameAuthor){
+        return listSong.stream().filter(s->(s.getNameSong().equals(nameSong) && s.getNameAuthor().equals(nameAuthor)))
+        .findAny().orElse(null) == null;
     }
 
-    public ArrayList<Song> getListSong(){
+    public List<Song> getListSong(){
         return listSong;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     public String getDurationSong(String path){
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(path);
-        String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        retriever.release();
-        return duration;
-
+        try{
+            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+            retriever.setDataSource(path);
+            String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+            retriever.release();
+            return duration;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void addSong(Song song){
         listSong.add(song);
-        listSong = (ArrayList<Song>) listSong.stream().sorted(Comparator.comparing(Song::getNameSong))
+        listSong = listSong.stream().sorted
+                (Comparator.comparing(Song::isFavorite).thenComparing(Song::getNameSong))
                 .collect(Collectors.toList());
     }
 

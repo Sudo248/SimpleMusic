@@ -2,12 +2,16 @@ package com.duonglh.musicapp;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,11 +19,14 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.view.KeyEvent;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -35,16 +42,17 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.duonglh.musicapp.fragment.ViewPagerAdapter;
 import com.duonglh.musicapp.model.Data.Mp3File;
 import com.duonglh.musicapp.model.Song.Song;
-import com.duonglh.musicapp.model.Song.SongDataBase;
+import com.duonglh.musicapp.service.MusicService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements MyInterface.MediaPlayerAction{
+public class MainActivity extends AppCompatActivity implements Interface.MediaPlayerAction{
     public static final int REQUEST_FROM_PLAYING_ACTIVITY = 1;
     public static final int REQUEST_PERMISSION = 2;
     private ProgressBar progressBar;
@@ -53,12 +61,12 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
     private Button previousButton, nextButton, playingButton;
     private SearchView searchView;
     private ConstraintLayout mainPlaying;
-    private MusicService musicService;
-    private MyInterface.UpdateView updateView;
-    private boolean isBoundService, once = false;
+    public MusicService musicService;
+    private Interface.UpdateView updateView;
+    public boolean once = false, isDownloaded = false;
     private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
-    private MyInterface.ResponseSearch responseSearch;
-    private MyInterface.onKeyDown onKeyDown;
+    private Interface.ResponseSearch responseSearch;
+    private Interface.onBackPress onBackPress;
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigationView;
     private ViewPagerAdapter viewPagerAdapter;
@@ -71,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent service = new Intent(MainActivity.this, MusicService.class);
-        isBoundService = bindService(service, serviceConnection, BIND_AUTO_CREATE);
+        bindService(service, serviceConnection, BIND_AUTO_CREATE);
 
 //        SongDataBase.getInstance(this).songDAO().deleteAllSong();
 //        this.deleteDatabase("songs");
@@ -79,29 +87,29 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
         startNewActivity();
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Intent stopService = new Intent(this, MusicService.class);
+        stopService(stopService);
     }
 
     @Override
     public void onBackPressed() {
-        if (!searchView.getQuery().equals("")) {
+        if(currentFragment == 2){
+            if (!onBackPress.press()) {
+                viewPager.setCurrentItem(0);
+            }
+            return;
+        }
+        else if (!searchView.getQuery().toString().equals("")) {
             searchView.setQuery("",false);
             searchView.clearFocus();
             searchView.setIconified(true);
             return;
         }
-        super.onBackPressed();
+        moveTaskToBack(true);
     }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(event != null && onKeyDown != null) onKeyDown.press(keyCode, event);
-        return super.onKeyDown(keyCode, event);
-    }
-
 
     private final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
@@ -149,7 +157,9 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
                 new LoadDataAsyncTask().execute();
                 makeDir();
             } else {
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
+                Toast t = Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG);
+                t.setGravity(Gravity.CENTER,0,0);
+                t.show();
                 String[] permission = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO};
                 requestPermissions(permission, REQUEST_PERMISSION);
             }
@@ -203,14 +213,14 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                responseSearch = (MyInterface.ResponseSearch) viewPagerAdapter.getItem(currentFragment);
+                responseSearch = (Interface.ResponseSearch) viewPagerAdapter.getItem(currentFragment);
                 responseSearch.response(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                responseSearch = (MyInterface.ResponseSearch) viewPagerAdapter.getItem(currentFragment);
+                responseSearch = (Interface.ResponseSearch) viewPagerAdapter.getItem(currentFragment);
                 responseSearch.response(newText);
 
                 return false;
@@ -229,6 +239,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
         }
 
         playingButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 play();
@@ -314,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void play() {
         if (musicService.isPlaying()) {
@@ -343,6 +355,18 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
         setView();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void cancel() {
+        if (musicService.isPlaying()) {
+            imageViewSongPlaying.animate().cancel();
+            playingButton.setBackgroundResource(R.drawable.ic_baseline_play);
+            musicService.pause();
+        }
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+    }
+
     @SuppressLint("StaticFieldLeak")
     private class LoadDataAsyncTask extends AsyncTask<Void, Integer, String> {
         @RequiresApi(api = Build.VERSION_CODES.R)
@@ -350,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
         protected String doInBackground(Void... voids) {
             Mp3File.getInstance().loadAllData(MainActivity.this);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -364,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
             super.onPostExecute(s);
             setContentView(R.layout.activity_main);
             mapping();
-            updateView = new MyInterface.UpdateView() {
+            updateView = new Interface.UpdateView() {
                 @Override
                 public void update() {
                     setView();
@@ -377,7 +401,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
                     mainPlaying.setVisibility(View.VISIBLE);
                 }
             } else {
-                Toast.makeText(MainActivity.this, "NO  MUSIC", Toast.LENGTH_LONG).show();
+                showNoSongDialog(Gravity.CENTER_VERTICAL);
             }
             prepareUI();
         }
@@ -392,6 +416,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
     }
 
     private void setUpViewPager(){
+
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPagerAdapter);
 
@@ -434,6 +459,41 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
 
     }
 
+    @SuppressLint("SetTextI18n")
+    private void showNoSongDialog(int gravity){
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_no_song);
+
+        Window window = dialog.getWindow();
+        if(window == null) return;
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        if(gravity == Gravity.CENTER_VERTICAL ){
+            dialog.setCancelable(true);
+        }
+        else{
+            dialog.setCancelable(false);
+        }
+
+        ImageButton directDownloadButton = dialog.findViewById(R.id.directDownloadButton);
+
+        directDownloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                directToDownloadFragment(1);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
     public void hideKeyBoard(){
         if (!searchView.getQuery().equals("")) {
             searchView.setQuery("",false);
@@ -449,16 +509,21 @@ public class MainActivity extends AppCompatActivity implements MyInterface.Media
         }
     }
 
-    public void setOnKeyDown(MyInterface.onKeyDown onKeyDown){
-        this.onKeyDown = onKeyDown;
+    public void setOnBackPress(Interface.onBackPress onBackPress){
+        this.onBackPress = onBackPress;
     }
 
-    public void updateListSongService(){
-        musicService.updateListSong();
+    public void directToDownloadFragment(int fragment){
+        viewPager.setCurrentItem(fragment);
     }
 
-    public  void removeSongInService(int position){
-        musicService.removeSong(position);
+    public void updateFromRankFragment(){
+        if (musicService.isPlaying()) {
+            animationRotation();
+            playingButton.setBackgroundResource(R.drawable.ic_baseline_pause);
+        } else {
+            imageViewSongPlaying.animate().cancel();
+            playingButton.setBackgroundResource(R.drawable.ic_baseline_play);
+        }
     }
-
 }

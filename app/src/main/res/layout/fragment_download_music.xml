@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_main"
-    tools:context=".DownloadMusicFragment">
+    tools:context=".fragment.DownloadMusicFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
@@ -64,6 +64,33 @@
                 android:layout_marginTop="182dp"
                 android:visibility="gone"
                 android:indeterminate="true"/>
+
+            <LinearLayout
+                android:id="@+id/icon_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="-3dp"
+                android:layout_marginTop="162dp"
+                android:layout_marginEnd="3dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/search_and_download" />
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_and_download"
+                    android:textSize="25sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
 
         </RelativeLayout>
 

@@ -15,11 +15,11 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.duonglh.musicapp.Interface;
 import com.duonglh.musicapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> implements Filterable {
 
@@ -34,16 +34,10 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         notifyDataSetChanged();
     }
 
-    public interface IsClickFavorite{
-        void updateFavorite(Song song);
-    }
-    public interface IsOnClickItem{
-        void onClickItem(int position);
-    }
-    private final IsClickFavorite isClickFavorite;
-    private final IsOnClickItem isOnClickItem;
+    private final Interface.IsClickFavorite isClickFavorite;
+    private final Interface.IsOnClickItem isOnClickItem;
 
-    public SongAdapter(IsClickFavorite isClickFavorite, IsOnClickItem isOnClickItem) {
+    public SongAdapter(Interface.IsClickFavorite isClickFavorite, Interface.IsOnClickItem isOnClickItem) {
         this.isClickFavorite = isClickFavorite;
         this.isOnClickItem = isOnClickItem;
     }
@@ -88,7 +82,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
                     song.setFavorite(true);
                     holder.imageViewStart.setImageResource(R.drawable.ic_baseline_star_32);
                 }
-                isClickFavorite.updateFavorite(song);// update vao database
+                isClickFavorite.update(song);// update vao database
             }
         });
 
@@ -100,12 +94,12 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
                     int id = listSong.get(position).getId();
                     for(int i=0; i < listSongsOld.size(); i++){
                         if(listSongsOld.get(i).getId() == id){
-                            isOnClickItem.onClickItem(i);
-                            break;
+                            isOnClickItem.click(i);
+                            return;
                         }
                     }
                 }
-                else isOnClickItem.onClickItem(position);
+                else isOnClickItem.click(position);
             }
         });
 
