@@ -17,6 +17,6 @@
     <string name="title_no_song_dialog">Không tìm thấy mp3 trên thiết bị</string>
     <string name="notFoundSongOnDivice">Không thể đọc bất kì mp3 nào trên thiết bị của bạn. Hãy tải về ...</string>
     <string name="_404_not_found">404 Not Found</string>
-    <string name="search_and_download">Search And Download</string>
+    <string name="search_and_download">Search and Download</string>
 
 </resources>

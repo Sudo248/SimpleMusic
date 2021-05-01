@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_main"
-    tools:context=".DownloadMusicFragment">
+    tools:context=".fragment.DownloadMusicFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
@@ -89,9 +89,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/search_and_download"
                     android:textSize="25sp"
-                    android:textStyle="bold" />
-
-
+                    android:textStyle="bold"/>
             </LinearLayout>
 
         </RelativeLayout>

@@ -18,6 +18,7 @@ import com.duonglh.musicapp.model.Song.SongDataBase;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Mp3File {
@@ -25,8 +26,7 @@ public class Mp3File {
     @SuppressLint("StaticFieldLeak")
     private static Mp3File MP3INSTANCE = null;
     private Context context;
-    private ArrayList<Song> listSong;
-
+    private List<Song> listSong;
 
     public Mp3File(){
         listSong = new ArrayList<>();
@@ -44,13 +44,15 @@ public class Mp3File {
     public void loadAllData(Context context) {
         this.context = context;
         // get From DataBase
-        listSong = (ArrayList<Song>) SongDataBase.getInstance(context).songDAO().getListSongs();
+        listSong = SongDataBase.getInstance(context).songDAO().getListSongs();
 
 //        getFromMediaAudio();
 
         getFromOtherLocation(Environment.getExternalStorageDirectory());
 
-        listSong = (ArrayList<Song>) listSong.stream().sorted(Comparator.comparing(Song::getNameSong)).collect(Collectors.toList());
+        listSong = listSong.stream().sorted
+                (Comparator.comparing(Song::isFavorite).reversed().thenComparing(Song::getNameSong))
+                .collect(Collectors.toList());
 
     }
 
@@ -121,7 +123,7 @@ public class Mp3File {
         .findAny().orElse(null) == null;
     }
 
-    public ArrayList<Song> getListSong(){
+    public List<Song> getListSong(){
         return listSong;
     }
 
@@ -142,7 +144,8 @@ public class Mp3File {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void addSong(Song song){
         listSong.add(song);
-        listSong = (ArrayList<Song>) listSong.stream().sorted(Comparator.comparing(Song::getNameSong))
+        listSong = listSong.stream().sorted
+                (Comparator.comparing(Song::isFavorite).thenComparing(Song::getNameSong))
                 .collect(Collectors.toList());
     }
 

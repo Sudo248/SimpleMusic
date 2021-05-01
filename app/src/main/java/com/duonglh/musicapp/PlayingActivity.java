@@ -8,6 +8,7 @@ import androidx.palette.graphics.Palette;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -21,7 +22,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
@@ -30,8 +30,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.duonglh.musicapp.model.Data.Mp3File;
 import com.duonglh.musicapp.model.Song.Song;
+import com.duonglh.musicapp.service.MusicService;
 import com.gauravk.audiovisualizer.visualizer.CircleLineVisualizer;
 
 import org.jetbrains.annotations.Contract;
@@ -41,7 +41,7 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PlayingActivity extends AppCompatActivity implements MyInterface.MediaPlayerAction{
+public class PlayingActivity extends AppCompatActivity implements Interface.MediaPlayerAction{
     private Button playButton, repeatButton, nextButton, previousButton, shuffleButton;
     private ImageButton backButton;
     private TextView durationView, totalDurationView, nameSongView, nameAuthorView;
@@ -52,7 +52,7 @@ public class PlayingActivity extends AppCompatActivity implements MyInterface.Me
     private int position = 0;
     private boolean startNewSong;
     private MusicService musicService;
-    private boolean isBoundService, isTouchSeekBar = false;
+    private boolean isTouchSeekBar = false;
     private ConstraintLayout playingActivity;
     private MusicService.MusicBinder musicBinder;
 
@@ -78,13 +78,11 @@ public class PlayingActivity extends AppCompatActivity implements MyInterface.Me
     @Override
     protected void onStart() {
         super.onStart();
-        if(!isBoundService){
-            Intent bindService = new Intent(PlayingActivity.this, MusicService.class);
-            isBoundService = bindService(bindService, serviceConnection, BIND_AUTO_CREATE);
-        }
+        Intent bindService = new Intent(PlayingActivity.this, MusicService.class);
+        bindService(bindService, serviceConnection, BIND_AUTO_CREATE);
         Intent intent       = this.getIntent();
         position            = intent.getIntExtra("position",-1);
-        startNewSong        = intent.getBooleanExtra("startNewSong", true);
+        startNewSong        = intent.getBooleanExtra("startNewSong", false);
         Intent service      = new Intent(this, MusicService.class);
         service.putExtra("CurrentSong", position);
         startService(service);
@@ -93,7 +91,6 @@ public class PlayingActivity extends AppCompatActivity implements MyInterface.Me
     @Override
     protected void onPause() {
         super.onPause();
-        isBoundService = false;
     }
 
     @Override
@@ -126,7 +123,7 @@ public class PlayingActivity extends AppCompatActivity implements MyInterface.Me
 
     private void prepare(){
 
-        musicService.setUpdateView(new MyInterface.UpdateView() {
+        musicService.setUpdateView(new Interface.UpdateView() {
             @Override
             public void update() {
                 setView();
@@ -151,6 +148,7 @@ public class PlayingActivity extends AppCompatActivity implements MyInterface.Me
             }
         }
         playButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 play();
@@ -353,6 +351,7 @@ public class PlayingActivity extends AppCompatActivity implements MyInterface.Me
 //        overridePendingTransition(R.anim.slide_from_top,R.anim.slide_in_top);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void play() {
         if(musicService.isPlaying()){
@@ -377,6 +376,18 @@ public class PlayingActivity extends AppCompatActivity implements MyInterface.Me
     public void previousSong() {
         musicService.previousSong();
         setView();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void cancel() {
+        if(musicService.isPlaying()){
+            playingImageView.animate().cancel();
+            musicService.pause();
+            playButton.setBackgroundResource(R.drawable.ic_baseline_play_circle_outline_24);
+        }
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
     }
 
     @SuppressLint("StaticFieldLeak")

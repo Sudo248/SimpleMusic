@@ -44,9 +44,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2e0b4039-8413-4f3f-ae07-0ad4a10efdf7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_download_done_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/search_and_download.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_no_song.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_close_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_file_download_off_24.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" afterDir="false" />
@@ -59,21 +58,23 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/DownloadMusicFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/DownloadMusicFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/DownloadMusicFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/fragment/DownloadMusicFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MyInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MyInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/PlayListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/PlayListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/RankFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/RankFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/SongOnline.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/SongOnline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/SongOnlineAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/SongOnlineAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/ViewPagerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/ViewPagerAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MusicReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/service/MusicReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MusicService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/service/MusicService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/MyInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/Interface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/PlayListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/fragment/PlayListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/PlayingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/PlayingActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/RankFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/fragment/RankFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/SongOnline.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/SongOnline/SongOnline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/SongOnlineAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/SongOnline/SongOnlineAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/ViewPagerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/fragment/ViewPagerAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Data/Mp3File.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Data/Mp3File.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/MyMediaPlayer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/MyNotificationChannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/service/MyNotificationChannel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/SongAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/model/Song/SongAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/logo_simple_music.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/logo_simple_music.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_playing.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_playing.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_delete_song.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_delete_song.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_download_music.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_download_music.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_play_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_play_list.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_rank.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_rank.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
@@ -127,7 +128,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="a7fa5d1" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-04-30T16:56:00.713Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-05-01T04:00:19.100Z" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -313,18 +314,18 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="454" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1617296322925" />
-    <state x="1019" y="173" width="468" height="784" key="#com.intellij.ide.util.MemberChooser" timestamp="1619802972808">
+    <state x="1019" y="173" width="468" height="784" key="#com.intellij.ide.util.MemberChooser" timestamp="1619842650805">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="1019" y="173" width="468" height="784" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1619802972808" />
+    <state x="1019" y="173" width="468" height="784" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1619842650805" />
     <state x="703" y="400" width="585" height="325" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1618896645880">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="703" y="400" width="585" height="325" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/72.27.1848.1053@72.27.1848.1053" timestamp="1618896645880" />
-    <state x="72" y="27" width="1838" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1619730750469">
+    <state x="72" y="27" width="1838" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1619862833891">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="72" y="27" width="1838" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619730750469" />
+    <state x="72" y="27" width="1838" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619862833891" />
     <state x="663" y="242" width="655" height="629" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1619800629492">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
@@ -349,38 +350,38 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="774" y="314" width="881" height="491" key="FileChooserDialogImpl/72.27.1848.1053@72.27.1848.1053" timestamp="1619697693177" />
-    <state width="1791" height="623" key="GridCell.Tab.0.bottom" timestamp="1619802909128">
+    <state width="1791" height="417" key="GridCell.Tab.0.bottom" timestamp="1619865283762">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="623" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1619802909128" />
-    <state width="1791" height="623" key="GridCell.Tab.0.center" timestamp="1619802909127">
+    <state width="1791" height="417" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1619865283762" />
+    <state width="1791" height="417" key="GridCell.Tab.0.center" timestamp="1619865283760">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="623" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1619802909127" />
-    <state width="1791" height="623" key="GridCell.Tab.0.left" timestamp="1619802909127">
+    <state width="1791" height="417" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1619865283760" />
+    <state width="1791" height="417" key="GridCell.Tab.0.left" timestamp="1619865283759">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="623" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1619802909127" />
-    <state width="1791" height="623" key="GridCell.Tab.0.right" timestamp="1619802909128">
+    <state width="1791" height="417" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1619865283759" />
+    <state width="1791" height="417" key="GridCell.Tab.0.right" timestamp="1619865283761">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="623" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1619802909128" />
-    <state width="1791" height="497" key="GridCell.Tab.1.bottom" timestamp="1619791698305">
+    <state width="1791" height="417" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1619865283761" />
+    <state width="1791" height="450" key="GridCell.Tab.1.bottom" timestamp="1619808142667">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="497" key="GridCell.Tab.1.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1619791698305" />
-    <state width="1791" height="497" key="GridCell.Tab.1.center" timestamp="1619791698304">
+    <state width="1791" height="450" key="GridCell.Tab.1.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1619808142667" />
+    <state width="1791" height="450" key="GridCell.Tab.1.center" timestamp="1619808142664">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="497" key="GridCell.Tab.1.center/72.27.1848.1053@72.27.1848.1053" timestamp="1619791698304" />
-    <state width="1791" height="497" key="GridCell.Tab.1.left" timestamp="1619791698304">
+    <state width="1791" height="450" key="GridCell.Tab.1.center/72.27.1848.1053@72.27.1848.1053" timestamp="1619808142664" />
+    <state width="1791" height="450" key="GridCell.Tab.1.left" timestamp="1619808142664">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="497" key="GridCell.Tab.1.left/72.27.1848.1053@72.27.1848.1053" timestamp="1619791698304" />
-    <state width="1791" height="497" key="GridCell.Tab.1.right" timestamp="1619791698304">
+    <state width="1791" height="450" key="GridCell.Tab.1.left/72.27.1848.1053@72.27.1848.1053" timestamp="1619808142664" />
+    <state width="1791" height="450" key="GridCell.Tab.1.right" timestamp="1619808142666">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1791" height="497" key="GridCell.Tab.1.right/72.27.1848.1053@72.27.1848.1053" timestamp="1619791698304" />
+    <state width="1791" height="450" key="GridCell.Tab.1.right/72.27.1848.1053@72.27.1848.1053" timestamp="1619808142666" />
     <state x="476" y="239" width="1030" height="635" key="IDE.errors.dialog" timestamp="1617614504094">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
@@ -402,10 +403,10 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="172" y="127" width="1648" height="853" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619371828366" />
-    <state x="205" y="27" width="1572" height="1053" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1619802163775">
+    <state x="205" y="27" width="1572" height="1053" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1619833852704">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="205" y="27" width="1572" height="1053" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1619802163775" />
+    <state x="205" y="27" width="1572" height="1053" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1619833852704" />
     <state x="722" y="451" width="538" height="219" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1618939116779">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
@@ -414,6 +415,10 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="794" y="117" width="1080" height="848" key="org.intellij.images.editor.actions.BackgroundImageDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1618581854059" />
+    <state x="703" y="258" width="576" height="597" key="refactoring.ChangeSignatureDialog" timestamp="1619833282872">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="703" y="258" width="576" height="597" key="refactoring.ChangeSignatureDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1619833282872" />
     <state x="576" y="248" key="run.anything.popup" timestamp="1619726137061">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
@@ -424,6 +429,15 @@
     <state x="575" y="44" width="840" height="1034" key="search.everywhere.popup/72.27.1848.1053@72.27.1848.1053" timestamp="1619729376726" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/duonglh/musicapp/fragment/DownloadMusicFragment.java</url>
+          <line>344</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="app">
         <watch expression="searchView.getQuery()" language="JAVA" />
