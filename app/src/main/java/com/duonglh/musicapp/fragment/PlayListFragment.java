@@ -32,12 +32,8 @@ import com.duonglh.musicapp.model.Song.SongAdapter;
 import com.duonglh.musicapp.model.Song.SongDataBase;
 
 import java.io.File;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PlayListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PlayListFragment extends Fragment implements Interface.ResponseSearch {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -47,47 +43,13 @@ public class PlayListFragment extends Fragment implements Interface.ResponseSear
     private RecyclerView recyclerView;
     private SongAdapter songAdapter;
     private View mainView;
-    private Context mainContext;
     private MainActivity mainActivity;
 
-    public PlayListFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PlayList.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PlayListFragment newInstance(String param1, String param2) {
-        PlayListFragment fragment = new PlayListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mainContext = context;
-        mainActivity = (MainActivity) getActivity();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            // TODO: Rename and change types of parameters
-            String mParam1 = getArguments().getString(ARG_PARAM1);
-            String mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
+        mainActivity = (MainActivity) getActivity();
+        //Ham nay se chay dc dau tien va nen khoi tao nhung gia tri lien quan den bien quan trong cua fragment
     }
 
     @Override
@@ -98,9 +60,13 @@ public class PlayListFragment extends Fragment implements Interface.ResponseSear
         return mainView;
     }
 
+    /**
+     * https://developer.android.com/guide/fragments/lifecycle
+     *
+     * function nay thuc hien do view cho nguoi dung thay
+     * */
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mapping();
         displayListSongs();
     }
@@ -110,7 +76,7 @@ public class PlayListFragment extends Fragment implements Interface.ResponseSear
         super.onResume();
         if(mainActivity.isDownloaded){
             if(songAdapter!=null){
-                songAdapter.setData(mainContext, Mp3File.getInstance().getListSong());
+                songAdapter.setData(getContext(), Mp3File.getInstance().getListSong());
                 songAdapter.notifyDataSetChanged();
             }
             if(mainActivity != null){
@@ -134,7 +100,7 @@ public class PlayListFragment extends Fragment implements Interface.ResponseSear
         songAdapter = new SongAdapter(new Interface.IsClickFavorite() {
             @Override
             public void update(Song song) {
-                SongDataBase.getInstance(mainContext).songDAO().updateSong(song);
+                SongDataBase.getInstance(getContext()).songDAO().updateSong(song);
             }
         }, new Interface.IsOnClickItem() {
             @Override
@@ -143,9 +109,14 @@ public class PlayListFragment extends Fragment implements Interface.ResponseSear
             }
         });
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainContext, RecyclerView.VERTICAL, false);
+        List<Song> listSongs = Mp3File.getInstance().getListSong();
+        songAdapter.setData(getContext(),listSongs);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        songAdapter.setData(mainContext, Mp3File.getInstance().getListSong());
+        // KO DC NHE HIEN TAI NO DANG CHAY TREN LUONG CHINH
+        //songAdapter.setData(getContext(), Mp3File.getInstance().getListSong());
+
         recyclerView.setAdapter(songAdapter);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -174,7 +145,7 @@ public class PlayListFragment extends Fragment implements Interface.ResponseSear
 
     @SuppressLint("SetTextI18n")
     private void showDeleteSongDialog(int gravity, int position){
-        final Dialog dialog = new Dialog(mainContext);
+        final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_delete_song);
 
@@ -227,11 +198,11 @@ public class PlayListFragment extends Fragment implements Interface.ResponseSear
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SongDataBase.getInstance(mainContext).songDAO().deleteSong(song);
+                SongDataBase.getInstance(requireContext()).songDAO().deleteSong(song);
                 new File(song.getPath()).delete();
             }
         }).start();
-        Toast t = Toast.makeText(mainContext,"Delete "+ song.getNameSong() + " success",Toast.LENGTH_SHORT);
+        Toast t = Toast.makeText(requireContext(),"Delete "+ song.getNameSong() + " success",Toast.LENGTH_SHORT);
         t.setGravity(Gravity.TOP,0,50);
         t.show();
     }
